@@ -1,0 +1,17 @@
+<ion-view title="Home" class='ad'>
+	<ion-header-bar align-title="left" class="bar-positive">
+		<h1 class="title">HomeVIEW Real Estate Listings</h1>
+	</ion-header-bar>
+	<ion-content>
+		<div ng-show="loading">
+			HomeVIEW is loading...
+		</div>
+		<div id='homead' ng-show='showAd'>
+			<button type='button' id='closeAd' class='button button-block button-stable' ng-hide='!adLoaded' ng-click='close_ad();'>Close Ad</button>
+			<div id='home_ad_container'>
+
+			</div>
+
+		</div>
+	</ion-content>
+</ion-view>

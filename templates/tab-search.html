@@ -1,0 +1,106 @@
+<ion-view title="Search">
+    <ion-header-bar align-title="left" class="bar-positive">
+      <h1 class="title">Search</h1>
+    </ion-header-bar>
+  <ion-content class="has-header padding">
+    <div class="searchForm">
+        <div class='list'>
+
+            <!--<div>
+                <div ng-class='{div1SearchEnterLocation:!useMyLocation,div1SearchMyLocation:useMyLocation}'>
+                    <li class="item item-checkbox" style='height:47px;'>
+                        <label class="checkbox">
+                            <input type="checkbox" ng-model='useMyLocation' ng-change='getLocation(useMyLocation)'>
+                        </label>
+                        <span ng-show='useMyLocation'>My Location</span>
+                        <span ng-show='!useMyLocation'>Location:</span>
+                    </li>
+                </div>
+                <div ng-show='!useMyLocation' ng-class='{div2SearchEnterLocation:!useMyLocation,div2SearchMyLocation:useMyLocation}'>
+                    <li class="item item-input">
+                        <input type='text' id="location" ng-model="location" placeholder='City or ZipCode' />
+                    </li>
+                </div>
+                <div ng-class='{div3SearchEnterLocation:!useMyLocation,div3SearchMyLocation:useMyLocation}'>
+                    <label class='item item-input item-select' style='height:47px;'>
+                        <div class='input-label'>
+                            Radius (miles)
+                        </div>
+                        <select id='radius' ng-model="radius">
+                            <option>5</option>
+                            <option>10</option>
+                            <option>25</option>
+                            <option>50</option>
+                        </select>
+                    </label>
+                </div>
+            </div>-->
+
+            <li class="item item-checkbox">
+                <label class="checkbox">
+                    <input type="checkbox" id="useMyLocation" ng-model='useMyLocation' ng-change='getLocation(useMyLocation)'>
+                </label>
+                Use My Location
+            </li>     
+
+            <li class="item item-input" ng-show="!useMyLocation">
+                <label class="input-label">
+                    Location:
+                </label>
+                <input type='text' id="location" ng-model="location" placeholder='City or ZipCode' />
+            </li>   	
+
+            <label class='item item-input item-select' style='height:47px;'>
+                <div class='input-label'>
+                    Radius:
+                </div>
+                <!--<select ng-model="radius" id="radius" ng-options="radiuses.miles for radius in radiuses"></select>-->
+                <!--<select ng-model="radius" id="radius" ng-options="radius.miles for radius in radiuses track by radius.miles"></select>-->
+                <select id='radius' ng-model="radius">
+                    <option value='5'>5 miles</option>
+                    <option value='10'>10 miles</option>
+                    <option value='25'>25 miles</option>
+                    <option value='50'>50 miles</option>
+                </select>
+            </label>
+
+
+            <div class="item item-divider">
+            Price: Min:{{minprice}}&nbsp;&nbsp;&nbsp;Max:{{maxprice}}
+            </div>
+            <div style='padding:5px;'>
+                <input type='hidden' id='minprice' value='{{minprice}}' />
+                <input type='hidden' id='maxprice' value='{{maxprice}}' />
+                <slider floor="50000" ceiling="1000000" step='25000' ng-model-low='minprice' ng-model-high='maxprice'></slider>
+            </div>
+            
+
+            <div class="item item-divider">
+            Beds: Min:{{minbeds}}&nbsp;&nbsp;&nbsp;Max:{{maxbeds}}
+            </div>
+            <div style='padding:5px;'>
+                <input type='hidden' id='minbeds' value='{{minbeds}}' />
+                <input type='hidden' id='maxbeds' value='{{maxbeds}}' />
+                <slider floor="1" ceiling="10" ng-model-low="minbeds" ng-model-high="maxbeds"></slider>
+            </div>
+
+            <div class="item item-divider">
+            Baths: Min:{{minbaths}}&nbsp;&nbsp;&nbsp;Max:{{maxbaths}}
+            </div>
+            <div style='padding:5px;'>
+                <input type='hidden' id='minbaths' value='{{minbaths}}' />
+                <input type='hidden' id='maxbaths' value='{{maxbaths}}' />
+                <slider floor="1" ceiling="10" ng-model-low="minbaths" ng-model-high="maxbaths"></slider>
+            </div>
+
+            
+        </div>
+
+        <button ng-click='search();' class='button button-block button-positive icon-right ion-search'>
+        	Search
+        </button>
+
+    </div>
+
+  </ion-content>
+</ion-view>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns   = "http://www.w3.org/ns/widgets"
+    xmlns:gap   = "http://phonegap.com/ns/1.0"
+    id          = "com.tekmtn.homeviewapp"
+    versionCode = "10" 
+    version     = "1.0.1">
+
+    <name>HomeVIEW Real Estate Listings</name>
+    <description>
+        Browse HomeVIEW listings
+    </description>
+    <author email="mike@tekmtn.com" href="http://www.tekmtn.com/">
+      TekMtn
+    </author>
+    <content src="index.html" />
+
+    <icon src="icon.png" gap:platform="ios" width="60" height="60" />
+    <icon src="icon.png" gap:platform="android" gap:qualifier="ldpi" />
+
+    <access origin="*" />
+    <preference name="fullscreen" value="true" />
+    <preference name="webviewbounce" value="false" />
+    <preference name="UIWebViewBounce" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
+
+    <gap:plugin name="com.adobe.plugins.gaplugin" />
+    <gap:plugin name="org.apache.cordova.geolocation" />
+
+    <gap:config-file platform="ios" parent="NSLocationAlwaysUsageDescription" overwrite="false"> 
+        <array><string>Allow GPS</string></array>
+    </gap:config-file> 
+
+    
+
+</widget>

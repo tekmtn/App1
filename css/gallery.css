@@ -1,0 +1,25 @@
+
+.photoGallery {
+    width:100%;
+    border:1px solid black;
+}
+.imageContainer {
+
+}
+.imageContainer .col {
+    margin:auto;
+}
+.picture_large {
+    /*max-width:650px;*/
+    vertical-align: middle;
+}
+.imageNavigation {
+
+}
+.img-responsive {
+    display: block;
+    height: auto;
+    max-width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}

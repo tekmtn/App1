@@ -1,0 +1,53 @@
+<ion-view title="Favorites">
+  <ion-header-bar align-title="left" class="bar-positive">
+    <h1 class="title">Favorites</h1>
+  </ion-header-bar>
+  <ion-content class="has-header">
+    <!-- ng-click="listings.splice($index, 1)" -->
+    <!-- <ion-delete-button class="ion-minus-circled"></ion-delete-button> -->
+
+    <div class='app-container'>
+
+      <div class="list" ng-hide="favoritesCount == 0">
+          <a ng-repeat="favorite in listings" class="item item-thumbnail-left" href="#/tab/home/{{favorite.mls_number}}">
+            <img src="http://images-homeview.re605.com/images/property/{{favorite.mls_number}}/1.jpg">
+            
+            <strong>{{getCurrency(favorite.price)}}</strong><span> &bull; {{favorite.address}}</span>
+            <p>{{favorite.beds}} Beds <span ng-hide="!favorite.baths">&bull; {{favorite.baths}} Baths </span><span ng-hide="!favorite.square_feet">&bull; {{favorite.square_feet}} Sq Ft</span></p>
+          </a>
+      </div>
+
+      <div ng-hide="favoritesCount > 0">
+        <p>You do not currently have any favorites.</p>
+      </div>
+
+    </div>
+
+
+  	<!--<div ng-repeat="favorite in listings" class='row'>
+  		<div class='col col-10'>
+  			
+  		</div>
+  		<div class="col col-10">
+  			<img src='http://dev-listings.re605.com/images/property/{{favorite.mls_number}}/1.jpg' class='fav-thumb img-responsive' />
+  		</div>
+  		<div class='col col-75'>
+        <strong ng-hide="!favorite.price">{{getCurrency(favorite.price)}}<br /></strong>
+        <span ng-hide="!favorite.address">{{favorite.address}}<br /></span>
+        <span ng-hide="!favorite.beds">{{favorite.beds}} Beds<br /></span>
+        <span ng-hide="!favorite.baths">{{favorite.baths}} Baths<br /></span>
+        <span ng-hide="!favorite.square_feet">{{favorite.square_feet}} Sq Ft</span>
+  		</div>
+  	</div>-->
+
+
+    <!--<ion-list show-delete="true">
+      <ion-item ng-repeat="favorite in listings" type="item-text-wrap" href="#/tab/home/{{favorite.mls_number}}">
+	    <ion-delete-button class="ion-minus-circled" ng-click="listings.splice($index, 1)"></ion-delete-button>
+	    
+      	<img src='https://s3-us-west-2.amazonaws.com/homeviewapp/images/listings/{{favorite.mls_number}}/1.jpg' />
+        {{favorite.address}}
+      </ion-item>
+    </ion-list>-->
+  </ion-content>
+</ion-view>

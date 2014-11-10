@@ -1,0 +1,72 @@
+<ion-view title="Search Results">
+	<ion-header-bar align-title="left" class="bar-positive">
+	  <div class="buttons">
+	    <button class="button" ng-click="goBack()">Back</button>
+	  </div>
+	  <h1 class="title">Search Results</h1>
+	</ion-header-bar>
+  <ion-content has-header="true" padding="true">
+  	<div class='searchResults' ng-hide="!showResults">
+        <div ng-hide="!loaded">
+            <div ng-if="listingCount >= 50"><strong>More than 50 results were found.<Br />Please refine your search to view more.</strong></div>
+            <div ng-if="listingCount > 0 && listingCount < 50"><strong>{{listingCount}} listing<span ng-hide"listingCount == 1">s</span> found</strong></div>
+            <div ng-hide="listingCount > 0">
+    			<p>No results were found, please adjust your search criteria.</p>
+    		</div>
+        </div>
+        <div ng-hide="loaded">
+            loading...
+        </div>
+
+        <div class="list search-results-container" ng-hide="listings.length == 0">
+        	
+        	<a ng-class="{'item item-thumbnail-left': listing.isListing, 'item item-search-results-ad': !listing.isListing}" 
+        	   ng-repeat="listing in listings"
+        	   ng-href="{{listing.isListing ? '#/tab/home/' + listing.mls_number : listing.ad.link_url}}">
+
+
+        	   <span ng-if="listing.isListing">
+	        	   	<img src="http://images-homeview.re605.com/images/property/{{listing.mls_number}}/1.jpg">
+
+					<strong>{{getCurrency(listing.price)}}</strong><span> &bull; {{listing.address}}</span>
+					<p><span ng-hide="!listing.beds">{{listing.beds}} Beds </span><span ng-hide="!listing.baths">&bull; {{listing.baths}} Baths </span><span ng-hide="!listing.square_feet">&bull; {{listing.square_feet}} Sq Ft</span></p>
+        	   </span>
+        	   <span ng-if="!listing.isListing && listings[listings.length-1] != listing">
+        	   		<img src="{{adurl}}/{{listing.ad.name}}" />
+        	   </span>
+        		<!--<a class="item item-thumbnail-left" href="#/tab/home/{{item.mls_number}}" ng-if="item.isListing">
+					
+				</a>
+	            <a class="item" href="{{item.ad.link_url}}" target="_blank" ng-if="!item.isListing"><img src="{{adurl}}/{{item.ad.name}}" /></a>-->
+
+        	</a>
+		</div>
+
+		
+
+        <!--<div class="mylist">
+          <div ng-repeat="item in listings">
+            <div class='item my-item' ng-if="item.isListing">
+                <a href='#/tab/home/{{item.mls_number}}'>
+                    <div class='thumb-container'>
+                        <img ng-src="http://dev-listings.re605.com/images/property/{{item.mls_number}}/1.jpg" class="search-img-responsive" />
+                    </div>
+                    <div class='search-item-details'>
+                    	<strong ng-hide="!item.price">{{getCurrency(item.price)}}<br /></strong>
+                    	<span ng-hide="!item.address">{{item.address}}<br /></span>
+                    	<span ng-hide="!item.beds">{{item.beds}} Beds<br /></span>
+                    	<span ng-hide="!item.baths">{{item.baths}} Baths<br /></span>
+                    	<span ng-hide="!item.square_feet">{{item.square_feet}} Sq Ft<br /></span>
+                    	<span ng-hide="!item.home_style">{{item.home_style}}<br /></span>
+                        
+                    </div>
+                </a>
+            </div>
+            <div class='search-results-ad' ng-if="!item.isListing">
+                <a href="{{item.ad.link_url}}" target="_blank"><img src="{{adurl}}/{{item.ad.name}}" /></a>
+            </div>
+          </div>
+        </div>-->
+    </div>
+  </ion-content>
+</ion-view>

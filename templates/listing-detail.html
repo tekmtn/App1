@@ -1,0 +1,161 @@
+<!--
+  This template loads for the 'tab.friend-detail' state (app.js)
+  'firend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pulls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+
+<link href="css/gallery.css" rel="stylesheet"></link>
+
+<ion-header-bar align-title="left" class="bar-positive">
+  <div class="buttons">
+    <button class="button" ng-click="goBack()">Back</button>
+  </div>
+  <h1 class="title">{{listing.address}}</h1>
+  <div class="buttons pull-right">
+    <span ng-hide='isFavorited'><button class='button' ng-click='saveFavorite()'>Favorite</button></span>
+    <span ng-hide='!isFavorited'><button class='button' ng-click='removeFavorite()'>Favorited</button></span>
+    
+    <!--<button id="btnFavoriteListing" type="button" ng-click="favoriteListing(listing.mls_number)" class="button button-small">Save As Favorite</button>-->
+  </div>
+</ion-header-bar>
+
+<ion-view title="{{listing.address}}">
+  <ion-content has-header="true" padding="true">
+
+    <h3>{{listing.price}}</h3>
+    <p>{{listing.address}}, {{listing.city}} {{listing.state}} {{listing.zip}}</p>
+    <p>{{listing.beds}} Beds &bull; {{listing.baths}} Baths &bull; {{listing.square_feet}} Sq Ft</p>
+
+    <div class='photoGallery'>
+      <div class='imageContainer row'>
+        <div class='col' style='text-align:center;'>
+          <p>Viewing {{_Index + 1}} of {{listing.picture_count}} photos</p>
+          <img src='{{listing.photos[_Index].src}}' class='picture_large img-responsive' />
+        </div>
+      </div>
+      <div class='imageNavigation row'>
+        <div class='col'>
+          <button class='button button-stable button-block' ng-click='showPrev()'>Previous</button>
+        </div>
+        <div class='col'>
+          <button class='button button-stable button-block' ng-click='showNext()'>Next</button>
+        </div>
+      </div>
+    </div>
+
+    <h3>Summary</h3>
+    <p>{{listing.summary}}</p>
+
+    <h3>Listing Details</h3>
+    <div class="listingDetails">
+
+      <!--<ul class='listingDetails'>
+        <li ng-repeat="(key, value) in listing">
+         <div ng-class="$even?'alternate-color':''">
+            <span>{{allowedFields[0]}}</span>
+           <span class='listingDetailsLabel'>{{key}}</span>
+           <span>{{value}}</span>
+         </div>
+        </li>
+      </ul>-->
+      <!--
+      open_house_date: ""
+      open_house_end: ""
+      open_house_end_ts: null
+      open_house_mod: null
+      open_house_start: ""
+      open_house_ts: ""
+    -->
+      <ul class='listingDetails'>
+        <li ng-repeat="field in ['beds','baths','home_style','garage_size','square_feet','mls_number','open_house_date', 'open_house_start','open_house_end','virtual_tour_url']" ng-if="$eval('listing.'+field)">
+         <div ng-class="$even?'listing-detail-field alternate-color':'listing-detail-field'">
+           <div class='listingDetailsLabel' ng-bind-html="fieldDescriptions[field]"></div>
+           <div class='listingDetailsValue' ng-if="field != 'virtual_tour_url'">
+              {{$eval("listing." + field)}}
+           </div>
+           <div class='listingDetailsValue' ng-if="field == 'virtual_tour_url'">
+              <a href='{{$eval("listing." + field)}}' target='_blank'>View&nbsp;Virtual&nbsp;Tour</a>
+           </div>
+           <div class='clearfix'></div>
+         </div>
+        </li>
+      </ul>
+
+      <!--<table width='100%' class='listingDetailsTable'>
+        <tr ng-repeat="(key, value) in listing" ng-class-odd="alternate-color">
+          <td class='listingDetailsLabel'>{{key}}</td>
+          <td>{{value}}</td>
+        </tr>
+
+        <tr class='alternate-color'>
+          <td class='listingDetailsLabel'>Beds</td>
+          <td>{{listing.beds}}</td>
+        </tr>
+        <tr>
+          <td class='listingDetailsLabel'>Baths</td>
+          <td>{{listing.baths}}</td>
+        </tr>
+        <tr class='alternate-color'>
+          <td class='listingDetailsLabel'>Style</td>
+          <td>{{listing.home_style}}</td>
+        </tr>
+        <tr>
+          <td class='listingDetailsLabel'>Garage&nbsp;Stalls</td>
+          <td>{{listing.garage_size}}</td>
+        </tr>
+        <tr class='alternate-color'>
+          <td class='listingDetailsLabel'>Square&nbsp;Feet</td>
+          <td>{{listing.square_feet}}</td>
+        </tr>
+        <tr ng-hide="!listing.mls_number">
+          <td class='listingDetailsLabel'>MLS&nbsp;Number</td>
+          <td>{{listing.mls_number}}</td>
+        </tr>
+        <tr class='alternate-color' ng-hide="!listing.virtual_tour_url">
+          <td class='listingDetailsLabel'>Virtual Tour:</td>
+          <td><a href='{{listing.virtual_tour_url}}' target='_blank'>View Virutal Tour</a></td>
+        </tr>
+      </table>-->
+    </div>
+
+  	<h3>Features</h3>
+  	<p>{{listing.features}}</p>
+
+    <h3>Agency Information</h3>
+    <p>
+      <span ng-hide="!listing.agency_name"><a href='tel:{{listing.agency_name}}'>{{listing.agency_name}}</a><br /></span>
+      <span ng-hide="!listing.agency_phone"><a href='tel:{{listing.agency_phone}}'>{{listing.agency_phone}}</a><br /></span>
+    </p>
+
+    <h3>Contact Information</h3>
+    <p>
+      {{listing.agent_name}}<br />
+      <span ng-hide="!listing.agent_phone"><a href='tel:{{listing.agent_phone}}'>{{listing.agent_phone}}</a><br /></span>
+      <span ng-hide="!listing.agent_email"><a href='mailto:{{listing.agent_email}}'>{{listing.agent_email}}</a><br /></span>
+      <span ng-hide="!listing.agent_website"><a href='{{listing.agent_website}}' target='_blank'>{{listing.agent_website}}</a></span>
+    </p>
+
+    <h3>Contact {{listing.agent_name}}</h3>
+    <div class="list list-inset">
+      <label class="item item-input">
+        <input type="text" id="name" ng-model="contact.name" placeholder="Your Name">
+      </label>
+      <label class="item item-input">
+        <input type="text" id="email" ng-model="contact.email" placeholder="Your Email">
+      </label>
+      <label class="item item-input">
+        <input type="text" id="phone" ng-model="contact.phone" placeholder="Your Phone">
+      </label>
+      <label class="item item-input">
+        <textarea id="message" ng-model="contact.message" placeholder="Your Message"></textarea>
+      </label>
+      <button class="button button-block" ng-click="sendMessage(listing.mls_number)">
+        Send Message
+      </button>
+    </div>
+  	
+
+
+  </ion-content>
+</ion-view>
