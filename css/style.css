@@ -387,7 +387,6 @@ slider {
 
 .footer-ad {
     max-height:155px;
-    padding:5px;
     width:100%;
     position:absolute;
     bottom:49px;
@@ -407,9 +406,10 @@ slider {
 }
 .footer-ad img {
     max-height:126px;
+    max-width:100%;
 }
 .has-tabs { /* 49 + max height of footer ad */
-    bottom: 204px;
+    bottom: 166px;
 }
 
 /* Desktops and laptops ----------- */
@@ -492,7 +492,10 @@ slider {
     height:45px;
 }
 
-/* smartphones, portrait iPhone, portrait 480x320 phones (Android) */ 
+
+/* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+/* iphone 6, iphone 6 plus, note 3,  portrait */
+
 @media (min-width:320px) {
 /* Styles */
     div.previewListingImage {
@@ -528,6 +531,7 @@ slider {
     .listingDetailsValue {
         float:left;
     }
+
 }
 
 /* Smartphones (portrait) ----------- */
@@ -567,9 +571,12 @@ slider {
     .listingDetailsValue {
         float:left;
     }
+
 }
 
 /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+/* ipad 3/4 portrait */
+
 @media (min-width:600px) {
 /* @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) { */
 /* Styles */
@@ -605,9 +612,11 @@ slider {
     .listingDetailsValue {
         float:left;
     }
+
 }
 
 /* tablet, landscape iPad, lo-res laptops ands desktops */
+/* ipad 3/4 landscape */
 @media (min-width:801px) {
 /* @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) { */
 /* Styles */
@@ -643,4 +652,5 @@ slider {
     .listingDetailsValue {
         float:left;
     }
+
 }
