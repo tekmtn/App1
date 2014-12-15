@@ -618,23 +618,40 @@ angular.module('homeviewapp.controllers', [])
     }
 
     $scope.sendMessage = function(mls_number) {
-        alert("not implemented yet");
+        
+        var valid = true;
+        var errmsg = "";
 
-        var url = "http://www.re605.com/homeviewapp/re605appsendcontactform/?callback=JSON_CALLBACK";
-        console.log($scope.contact);
-        $http.jsonp(url, {params: {
-                name: $scope.contact.name,
-                email: $scope.contact.email,
-                phone: $scope.contact.phone,
-                message: $scope.contact.message,
-                mls_number: mls_number
-            }}).success(function(data){
+        if($scope.contact.name.length == 0) {
+            valid = false;
+            errmsg += "Please include your name.\n";
+        }
+        if($scope.contact.message.length == 0) {
+            valid = false;
+            errmsg += "Please include a message.\n";
+        }
 
-            console.log("good");
+        if(!valid) {
+            alert(errmsg);
+        } else {
+            var url = "http://www.re605.com/homeviewapp/re605appsendcontactform/?callback=JSON_CALLBACK";
+            console.log($scope.contact);
+            $http.jsonp(url, {params: {
+                    name: $scope.contact.name,
+                    email: $scope.contact.email,
+                    phone: $scope.contact.phone,
+                    message: $scope.contact.message,
+                    mls_number: mls_number
+                }}).success(function(data){
 
-        }).error(function(data, status) {
-            console.log("bad");
-        });
+                console.log("good");
+
+            }).error(function(data, status) {
+                console.log("bad");
+            });
+        }
+
+        
     }
 
     $scope.saveFavorite = function() {
@@ -774,8 +791,6 @@ angular.module('homeviewapp.controllers', [])
             $scope.getLocation();
         }*/
 
-
-
         var useMyLocation = document.getElementById("useMyLocation").checked;
 
         //console.log("use my location: ", useMyLocation);
@@ -796,11 +811,10 @@ angular.module('homeviewapp.controllers', [])
 
         var valid = true;
         var errmsg = "";
-        /*if(isNaN(location) || zipcode.length != 5) {
+        if(!useMyLocation && location.length == 0) {
             valid = false;
-            errmsg += "invalid zipcode - please include a valid zipcode.\n"
-        }*/
-
+            errmsg += "Please include a search location or click 'Use My Location.'";
+        }
 
         if(!valid) {
             alert(errmsg);
