@@ -634,6 +634,7 @@ angular.module('homeviewapp.controllers', [])
         if(!valid) {
             alert(errmsg);
         } else {
+
             var url = "http://www.re605.com/homeviewapp/re605appsendcontactform/?callback=JSON_CALLBACK";
             console.log($scope.contact);
             $http.jsonp(url, {params: {
@@ -644,7 +645,9 @@ angular.module('homeviewapp.controllers', [])
                     mls_number: mls_number
                 }}).success(function(data){
 
-                console.log("good");
+                lh('submit', 'AGENT_EMAIL_SENT', {lkey:data.listing.listing_key});
+
+                console.log("good", data.listing.listing_key);
 
             }).error(function(data, status) {
                 console.log("bad");
@@ -652,6 +655,11 @@ angular.module('homeviewapp.controllers', [])
         }
 
         
+    }
+
+    $scope.metrics_report_event = function(event, listing_key) {
+        console.log("sending metrics for", event, listing_key);
+        lh('submit', event, {lkey:listing_key});
     }
 
     $scope.saveFavorite = function() {
@@ -672,7 +680,8 @@ angular.module('homeviewapp.controllers', [])
         if(gaPlugin) {
             gaPlugin.trackEvent( gaSuccessHandler, gaErrorHandler, "Listing Details", "Click", "View Listing", $stateParams.mls);
         }
-        
+
+               
 
         $http.jsonp($scope.jsonpurl, {params: {
                 mls: $stateParams.mls,
@@ -681,6 +690,8 @@ angular.module('homeviewapp.controllers', [])
 
             if(data.result == "success") {
                 $scope.listing = data.listing;
+                console.log("metrics reporting: ", $scope.listing.listing_key);
+                lh('submit', 'DETAIL_PAGE_VIEWED', {lkey:$scope.listing.listing_key}); 
                 $scope.isFavorited = Favorites.isFavorite($scope.listing.mls_number);
                 $scope.listing.price = "$" + currency.get($scope.listing.price);
                 $scope.listing.photos = [];
@@ -947,8 +958,14 @@ angular.module('homeviewapp.controllers', [])
                     if(gaPlugin) {
                         gaPlugin.trackEvent( gaSuccessHandler, gaErrorHandler, "Search Results", "Load", "Load Search Results", criteria.location);
                     }
-                    
-                   
+
+                    lhlkey = [];
+                    data.listings.forEach(function(item) {
+                        lhlkey.push({lkey:item.listing_key});
+                    });
+                    lh('submit', 'SEARCH_DISPLAY', lhlkey);
+                    console.log("lhlkey",lhlkey);
+
                     console.log(data);
 
                     $scope.listings = data.listings;

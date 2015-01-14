@@ -25,6 +25,12 @@
 
     <gap:plugin name="com.adobe.plugins.gaplugin" />
     <gap:plugin name="org.apache.cordova.geolocation" />
+    <gap:plugin name="org.apache.cordova.inappbrowser" />
+
+    <feature name="InAppBrowser">
+        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+        <param name="ios-package" value="CDVInAppBrowser" />
+    </feature>
 
     <gap:config-file platform="ios" parent="NSLocationAlwaysUsageDescription" overwrite="false"> 
         <array><string>Allow GPS</string></array>

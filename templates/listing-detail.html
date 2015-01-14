@@ -75,7 +75,8 @@
               {{$eval("listing." + field)}}
            </div>
            <div class='listingDetailsValue' ng-if="field == 'virtual_tour_url'">
-              <a href='{{$eval("listing." + field)}}' target='_blank'>View&nbsp;Virtual&nbsp;Tour</a>
+              <a href="#" onclick="window.open('{{$eval(\"listing.\" + field)}}', '_system', 'location=yes'); return false;">View&nbsp;Virtual&nbsp;Tour</a>
+              <!--<a href='{{$eval("listing." + field)}}' target='_blank'>View&nbsp;Virtual&nbsp;Tour</a>-->
            </div>
            <div class='clearfix'></div>
          </div>
@@ -125,14 +126,14 @@
     <h3>Agency Information</h3>
     <p>
       <span ng-hide="!listing.agency_name"><a href='tel:{{listing.agency_name}}'>{{listing.agency_name}}</a><br /></span>
-      <span ng-hide="!listing.agency_phone"><a href='tel:{{listing.agency_phone}}'>{{listing.agency_phone}}</a><br /></span>
+      <span ng-hide="!listing.agency_phone"><a href='tel:{{listing.agency_phone}}' ng-click="metrics_report_event('OFFICE_PHONE_CLICKED', listing.listing_key);">{{listing.agency_phone}}</a><br /></span>
     </p>
 
     <h3>Contact Information</h3>
     <p>
       {{listing.agent_name}}<br />
-      <span ng-hide="!listing.agent_phone"><a href='tel:{{listing.agent_phone}}'>{{listing.agent_phone}}</a><br /></span>
-      <span ng-hide="!listing.agent_email"><a href='mailto:{{listing.agent_email}}'>{{listing.agent_email}}</a><br /></span>
+      <span ng-hide="!listing.agent_phone"><a href='tel:{{listing.agent_phone}}' ng-click="metrics_report_event('AGENT_PHONE_CLICKED', listing.listing_key);">{{listing.agent_phone}}</a><br /></span>
+      <span ng-hide="!listing.agent_email"><a href='mailto:{{listing.agent_email}}' ng-click="metrics_report_event('AGENT_EMAIL_CLICKED', listing.listing_key);">{{listing.agent_email}}</a><br /></span>
       <span ng-hide="!listing.agent_website"><a href='{{listing.agent_website}}' target='_blank'>{{listing.agent_website}}</a></span>
     </p>
 
