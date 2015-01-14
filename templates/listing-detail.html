@@ -75,8 +75,7 @@
               {{$eval("listing." + field)}}
            </div>
            <div class='listingDetailsValue' ng-if="field == 'virtual_tour_url'">
-              <a href="#" onclick="window.open('{{$eval(\"listing.\" + field)}}', '_system', 'location=yes'); return false;">View&nbsp;Virtual&nbsp;Tour</a>
-              <!--<a href='{{$eval("listing." + field)}}' target='_blank'>View&nbsp;Virtual&nbsp;Tour</a>-->
+              <a style='cursor:pointer; color:blue; text-decoration:underline;' ng-click="view_virtual_tour(listing.virtual_tour_url);">View&nbsp;Virtual&nbsp;Tour</a>
            </div>
            <div class='clearfix'></div>
          </div>

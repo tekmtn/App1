@@ -662,6 +662,10 @@ angular.module('homeviewapp.controllers', [])
         lh('submit', event, {lkey:listing_key});
     }
 
+    $scope.view_virtual_tour = function(url) {
+        window.open(url, '_system', 'locaion=yes');
+    }
+
     $scope.saveFavorite = function() {
         var mls = $scope.listing.mls_number;
         Favorites.save(mls);
