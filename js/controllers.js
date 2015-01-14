@@ -663,7 +663,7 @@ angular.module('homeviewapp.controllers', [])
     }
 
     $scope.view_virtual_tour = function(url) {
-        window.open(url, '_system', 'location=yes');
+        window.open(url, '_blank', 'location=yes');
     }
 
     $scope.saveFavorite = function() {
