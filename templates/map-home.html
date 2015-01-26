@@ -10,19 +10,32 @@
    	<div id="preview">
 		<div class='previewHeader row'>
 			<div class='col'>
-				<div class='pull-left'><strong><span id="listingAddress"></span></strong><br /><strong><span id="listingPrice"></span></strong></div>
+				<div style="float:left; width:70%; white-space: nowrap; overflow:hidden;">
+					<strong><span id="listingAddress"></span></strong><br /><strong><span id="listingPrice"></span></strong>
+				</div>
+				<div style="float:right; width:30%;">
+					<div class="pull-right">
+						<button id="btnClosePreview" type="button" ng-click="closePreview()" class="button button-small icon ion-close"></button>
+					</div>
+					<div class="pull-right">
 
-				<button id="btnClosePreview" type="button" ng-click="closePreview()" class="button button-small icon ion-close pull-right">
-				</button>
+						<button ng-show="!listing.isFavorited" id="saveFavoriteBtn" ng-click="saveFavorite(listing.mls_number)" class="button button-small icon ion-heart">
+						</button>
+						
+    					<button ng-show="listing.isFavorited" id="removeFavoriteBtn" ng-click="removeFavorite(listing.mls_number)" class="button button-small icon ion-heart" style="color:red;">
+    					</button>
+    					
+					</div>
 
-				<button id="btnFavoriteListing" type="button" ng-click="favoriteListing(listing.mls_number)" class="button button-small icon ion-heart pull-right">
-				</button>
+				</div>
+
 				<div class='clearfix'></div>
 			</div>
 		</div>
 		<!--' + $scope.listings[x].mls_number + '-->
-		<div id="previewBodyRow" class='row'>
-			<div class='col'>
+		<div style="cursor:pointer;" ng-click="viewListingDetail(listing.mls_number);">
+			<div id="previewBodyRow" class='row'>
+				<div class='col'>
 					<div id="previewBody">
 						Beds: {{listing.beds}}<br />
 						Baths: {{listing.baths}}<br />
@@ -30,18 +43,9 @@
 						Home Style: {{listing.home_style}}<br />
 						Garage Size: {{listing.garage_size}}<br />
 					</div>
+				</div>
 			</div>
-		</div>
-		<div id="previewButtonsRow" class='row'>
-		<!--<div class='col'>
-			<a href="#/tab/home/" id="btnViewDetails" class="button button-positive button-block">View Details</a>
-		</div>
-		<div class='col'>
-			<a href="#" ng-click="closePreview()" id="btnClosePreview" class="button button-dark button-block">Close</a>
-		</div>
-		<div class='col'>
-			<a href="#" ng-click="saveFavorite()" id="btnSaveFavorite" class="button button-calm button-block">Save Favorite</a>
-		</div>-->
+			<div id="previewButtonsRow" class='row'></div>
 		</div>
    	</div>
   	

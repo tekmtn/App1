@@ -2,7 +2,7 @@
 angular.module('homeviewapp.controllers', [])
 
 .controller('AdCtrl', function($scope,$http,$state,$location, Ads) {
-    console.log("AdCtrl");
+    //console.log("AdCtrl");
 
     $scope.adurl = "http://www.re605.com/_client_media/ads/";
     $scope.showAd = true;
@@ -27,7 +27,7 @@ angular.module('homeviewapp.controllers', [])
     }
 
     $scope.init = function() {
-        console.log("init");
+        //console.log("init");
 
         $scope.showAd = true;
 
@@ -37,7 +37,7 @@ angular.module('homeviewapp.controllers', [])
         
 
         //console.log($scope);
-        console.log(window.localStorage["lastViewedAd"]);
+        //console.log(window.localStorage["lastViewedAd"]);
         
         //RootScope.showTabs = false;
         //$scope.showTabs = RootScope.showTabs;
@@ -45,10 +45,10 @@ angular.module('homeviewapp.controllers', [])
 
         if(window.localStorage["lastViewedAd"] != undefined) {
             var lastViewed = window.localStorage["lastViewedAd"];
-            console.log("last viewed: " + lastViewed);
+            //console.log("last viewed: " + lastViewed);
             // if now is ### hours after lastViewed, then show ad.
             var datenow = Date.now();
-            console.log("datenow: " + datenow);
+            //console.log("datenow: " + datenow);
 
             // milliseconds in 1 hour = 1000 * 60 * 60
             var ms_hour = 1000 * 60// * 60;
@@ -64,10 +64,10 @@ angular.module('homeviewapp.controllers', [])
         //$scope.showAd = window.localStorage["lastViewedAd"] == undefined ? true : false;
         //$scope.showAd = true;
         if($scope.showAd) {
-            console.log("getting ad");
+            //console.log("getting ad");
             Ads.gethome().then(function(ads) {
                 var homead = ads[0];
-                console.log(homead);
+                //console.log(homead);
 
                 var homelink = "<a href='" + homead.link_url + "' target='_blank'><img src='" + $scope.adurl + homead.name + "' /></a>";
                 document.getElementById('home_ad_container').innerHTML = homelink;
@@ -80,10 +80,10 @@ angular.module('homeviewapp.controllers', [])
         }
     }
 
-    console.log("Calling init");
+    //console.log("Calling init");
     $scope.init();
 })
-.controller('HomeCtrl', function($scope, $http, Ads, Favorites, ErrorLog) {
+.controller('HomeCtrl', function($scope, $window, $http, Ads, Favorites, ErrorLog) {
 
     $scope.lat = "43.541033";
     $scope.lng = "-96.7457591";
@@ -258,13 +258,19 @@ angular.module('homeviewapp.controllers', [])
     $scope.closePreview = function() {
         document.getElementById("preview").style.display = "none";
         document.getElementById("map").style.height = "100%";
+        $scope.listing = null;
         $scope.map.invalidateSize(true);
         //$scope.initializeMap();
     }
 
-    $scope.favoriteListing = function(mls) {
-
+    $scope.saveFavorite = function(mls) {
         Favorites.save(mls);
+        $scope.listing.isFavorited = true;
+    }
+
+    $scope.removeFavorite = function(mls) {
+        Favorites.remove(mls);
+        $scope.listing.isFavorited = false;
     }
 
     /*$scope.doListener = function() {
@@ -292,10 +298,10 @@ angular.module('homeviewapp.controllers', [])
         var swlat = sw.lat;
         var swlng = sw.lng;
 
-        console.log(nelat);
+        /*console.log(nelat);
         console.log(nelng);
         console.log(swlat);
-        console.log(swlng);
+        console.log(swlng);*/
 
         $http.jsonp($scope.jsonpurl, {params: {
                 nelat: nelat,
@@ -306,7 +312,7 @@ angular.module('homeviewapp.controllers', [])
             }}).success(function(data){
 
                 if(data.result == "success") {
-                    console.log(data);
+                    //console.log(data);
                     //console.log("found " + data.listings.length + " listings");
                     $scope.listings = data.listings;
                     
@@ -337,7 +343,7 @@ angular.module('homeviewapp.controllers', [])
 
                     $scope.loading = false;
 
-                    console.log("done");
+                    //console.log("done");
                 } else {
                     alert("There was a problem retrieving listings. This issue has been logged and reported.");
                     ErrorLog.store({url: $scope.jsonpurl, params: {nelat: nelat, nelng: nelng, swlat: swlat, swlng: swlng, type: "json"}, description: "problem retrieving listings, jsonp succedded"});
@@ -395,10 +401,14 @@ angular.module('homeviewapp.controllers', [])
         }
     }
 
+    $scope.viewListingDetail = function(mls_number) {
+        $window.location.href = '#/tab/home/' + mls_number;
+    }
+
     $scope.onMarkerClick = function(listing) {
         //console.log(e);
         return function () {
-            console.log(listing);
+            //console.log(listing);
 
             if(gaPlugin) {
                 gaPlugin.trackEvent( gaSuccessHandler, gaErrorHandler, "Map", "Click", "Preview Click", listing.mls_number);
@@ -407,10 +417,20 @@ angular.module('homeviewapp.controllers', [])
 
             $scope.listing = listing;
 
+            $scope.listing.isFavorited = Favorites.isFavorite($scope.listing.mls_number);
+            //console.log("is favorited", $scope.listing.isFavorited);
+
             //document.getElementById("btnViewDetails").href = "#/tab/home/" + listing.mls_number;
             //document.getElementById("previewBody").innerHTML = listing.previewBody;
             document.getElementById("preview").style.display = "block";
             document.getElementById("map").style.height = "50%";
+            /*if($scope.listing.isFavorited) {
+                document.getElementById('saveFavoriteBtn').display = 'none';
+                document.getElementById('removeFavoriteBtn').display = 'block';
+            } else {
+                document.getElementById('saveFavoriteBtn').display = 'block';
+                document.getElementById('removeFavoriteBtn').display = 'none';
+            }*/
 
             //document.getElemetnById("previewBody").height = (parseInt(h) / 2) + "px;";
 
@@ -539,7 +559,7 @@ angular.module('homeviewapp.controllers', [])
                     }}).success(function(data){
 
                         if(data.result == "success") {
-                            console.log("favorites :" + data.listings);
+                            //("favorites :" + data.listings);
 
 
                             if(data.listings !== false) {
@@ -636,7 +656,7 @@ angular.module('homeviewapp.controllers', [])
         } else {
 
             var url = "http://www.re605.com/homeviewapp/re605appsendcontactform/?callback=JSON_CALLBACK";
-            console.log($scope.contact);
+            //console.log($scope.contact);
             $http.jsonp(url, {params: {
                     name: $scope.contact.name,
                     email: $scope.contact.email,
@@ -647,10 +667,10 @@ angular.module('homeviewapp.controllers', [])
 
                 lh('submit', 'AGENT_EMAIL_SENT', {lkey:data.listing.listing_key});
 
-                console.log("good", data.listing.listing_key);
+                //console.log("good", data.listing.listing_key);
 
             }).error(function(data, status) {
-                console.log("bad");
+                //console.log("bad");
             });
         }
 
@@ -658,7 +678,7 @@ angular.module('homeviewapp.controllers', [])
     }
 
     $scope.metrics_report_event = function(event, listing_key) {
-        console.log("sending metrics for", event, listing_key);
+        //console.log("sending metrics for", event, listing_key);
         lh('submit', event, {lkey:listing_key});
     }
 
@@ -694,7 +714,7 @@ angular.module('homeviewapp.controllers', [])
 
             if(data.result == "success") {
                 $scope.listing = data.listing;
-                console.log("metrics reporting: ", $scope.listing.listing_key);
+                //console.log("metrics reporting: ", $scope.listing.listing_key);
                 lh('submit', 'DETAIL_PAGE_VIEWED', {lkey:$scope.listing.listing_key}); 
                 $scope.isFavorited = Favorites.isFavorite($scope.listing.mls_number);
                 $scope.listing.price = "$" + currency.get($scope.listing.price);
@@ -709,7 +729,7 @@ angular.module('homeviewapp.controllers', [])
                     }*/
                 };
 
-                console.log($scope.listing.photos);
+                //console.log($scope.listing.photos);
             } else {
                 alert("There was a problem retrieving the listing. This issue has been logged and reported.");
                 ErrorLog.store({url: $scope.jsonpurl, params: {mls: $stateParams.mls, type: "json"}, description: "unable to find listing, jsonp succedded"});
@@ -776,7 +796,7 @@ angular.module('homeviewapp.controllers', [])
     };
     $scope.getItemWidth = function(item) {
         var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-        console.log(width);
+        //console.log(width);
 
         if(width > 540) {
             return '50%';
@@ -855,7 +875,7 @@ angular.module('homeviewapp.controllers', [])
             //var c = [{location: location, state: "SD", lat:$scope.lat, lng:$scope.lng, radius: radius, minprice: minprice, maxprice: maxprice, minbeds: minbeds, maxbeds: maxbeds, minbaths: minbaths, maxbaths: maxbaths}];
             searchcriteria.store(c);
 
-            console.log("criteria", c);
+            //console.log("criteria", c);
 
             //$location.path('/#/tab/search/results');
             $state.transitionTo("tab.search-results");
@@ -901,7 +921,7 @@ angular.module('homeviewapp.controllers', [])
     }
 
     $scope.showError = function (error) {
-        console.log("location unable to be found");
+        //console.log("location unable to be found");
         //ErrorLog.store({description: "error with geolocation", error:error});
     }
 }).controller('SearchResultsCtrl', function($scope, $http, $window, searchcriteria, Ads, currency, $state, ErrorLog) {
@@ -968,9 +988,9 @@ angular.module('homeviewapp.controllers', [])
                         lhlkey.push({lkey:item.listing_key});
                     });
                     lh('submit', 'SEARCH_DISPLAY', lhlkey);
-                    console.log("lhlkey",lhlkey);
+                    //console.log("lhlkey",lhlkey);
 
-                    console.log(data);
+                    //console.log(data);
 
                     $scope.listings = data.listings;
                     $scope.listingCount = data.listingcount;
