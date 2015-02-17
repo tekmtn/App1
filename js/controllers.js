@@ -67,17 +67,22 @@ angular.module('homeviewapp.controllers', [])
             //console.log("getting ad");
             Ads.gethome().then(function(ads) {
                 var homead = ads[0];
-                //console.log(homead);
-                var homelink = "";
-                if(homead.link_url != "#") {
-                    homelink = "<a href='" + homead.link_url + "' target='_blank'><img src='" + $scope.adurl + homead.name + "' /></a>";
-                } else {
-                    homelink = "<img src='" + $scope.adurl + homead.name + "' />";
-                }
+                console.log("HomeAd", homead);
+                if(homead != undefined) {
+                    var homelink = "";
+                    if(homead.link_url != "#") {
+                        homelink = "<a href='" + homead.link_url + "' target='_blank'><img src='" + $scope.adurl + homead.name + "' /></a>";
+                    } else {
+                        homelink = "<img src='" + $scope.adurl + homead.name + "' />";
+                    }
 
-                document.getElementById('home_ad_container').innerHTML = homelink;
-                $scope.adLoaded = true; 
-                $scope.loading = false;
+                    document.getElementById('home_ad_container').innerHTML = homelink;
+                    $scope.adLoaded = true; 
+                    $scope.loading = false;
+                } else {
+                    $scope.loading = false;
+                    $state.go("map.home");
+                }
             });
         } else { 
             $scope.loading = false;
@@ -162,7 +167,6 @@ angular.module('homeviewapp.controllers', [])
             } else {
                 link = "<img src='" + $scope.adurl + ads[0].name + "' />";
             }
-
             document.getElementById('footer_ad_container').innerHTML = link;
         });
 
@@ -543,7 +547,12 @@ angular.module('homeviewapp.controllers', [])
     $scope.adurl = "http://www.re605.com/_client_media/ads/";
 
     Ads.getfooter().then(function(ads) {
-        var link = "<a href='" + ads[0].link_url + "' target='blank'><img src='" + $scope.adurl + ads[0].name + "' /></a>";
+        var link = "";
+        if(ads[0].link_url != "#") {
+            link = "<a href='" + ads[0].link_url + "' target='_blank'><img src='" + $scope.adurl + ads[0].name + "' /></a>";
+        } else {
+            link = "<img src='" + $scope.adurl + ads[0].name + "' />";
+        }
         document.getElementById('footer_ad_container').innerHTML = link;
     });
 
@@ -608,7 +617,12 @@ angular.module('homeviewapp.controllers', [])
     
 
     Ads.getfooter().then(function(ads) {
-        var link = "<a href='" + ads[0].link_url + "' target='blank'><img src='" + $scope.adurl + ads[0].name + "' /></a>";
+        var link = "";
+        if(ads[0].link_url != "#") {
+            link = "<a href='" + ads[0].link_url + "' target='_blank'><img src='" + $scope.adurl + ads[0].name + "' /></a>";
+        } else {
+            link = "<img src='" + $scope.adurl + ads[0].name + "' />";
+        }
         document.getElementById('footer_ad_container').innerHTML = link;
     });
 })
@@ -640,7 +654,12 @@ angular.module('homeviewapp.controllers', [])
     $scope.contact.message = "";*/
 
     Ads.getfooter().then(function(ads) {
-        var link = "<a href='" + ads[0].link_url + "' target='blank'><img src='" + $scope.adurl + ads[0].name + "' /></a>";
+        var link = "";
+        if(ads[0].link_url != "#") {
+            link = "<a href='" + ads[0].link_url + "' target='_blank'><img src='" + $scope.adurl + ads[0].name + "' /></a>";
+        } else {
+            link = "<img src='" + $scope.adurl + ads[0].name + "' />";
+        }
         document.getElementById('footer_ad_container').innerHTML = link;
     });
 
@@ -788,7 +807,12 @@ angular.module('homeviewapp.controllers', [])
     
 
     Ads.getfooter().then(function(ads) {
-        var link = "<a href='" + ads[0].link_url + "' target='blank'><img src='" + $scope.adurl + ads[0].name + "' /></a>";
+        var link = "";
+        if(ads[0].link_url != "#") {
+            link = "<a href='" + ads[0].link_url + "' target='_blank'><img src='" + $scope.adurl + ads[0].name + "' /></a>";
+        } else {
+            link = "<img src='" + $scope.adurl + ads[0].name + "' />";
+        }
         document.getElementById('footer_ad_container').innerHTML = link;
     });
 
@@ -943,7 +967,12 @@ angular.module('homeviewapp.controllers', [])
     $scope.loaded = false;
 
     Ads.getfooter().then(function(ads) {
-        var link = "<a href='" + ads[0].link_url + "' target='blank'><img src='" + $scope.adurl + ads[0].name + "' /></a>";
+        var link = "";
+        if(ads[0].link_url != "#") {
+            link = "<a href='" + ads[0].link_url + "' target='_blank'><img src='" + $scope.adurl + ads[0].name + "' /></a>";
+        } else {
+            link = "<img src='" + $scope.adurl + ads[0].name + "' />";
+        }
         document.getElementById('footer_ad_container').innerHTML = link;
     });
 
