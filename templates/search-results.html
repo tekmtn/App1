@@ -19,32 +19,29 @@
         </div>
 
         <div class="list search-results-container" ng-hide="listings.length == 0">
+        	<span ng-repeat="listing in listings">
+                <a ng-if="listing.isListing"
+                   ng-class="{'item item-thumbnail-left': listing.isListing}" 
+                   
+                   ng-href="{{'#/tab/home/' + listing.mls_number}}">
+
+                   <span>
+                        <img src="http://images-homeview.re605.com/images/property/{{listing.mls_number}}/1.jpg">
+
+                        <strong>{{getCurrency(listing.price)}}</strong><span> &bull; {{listing.address}}</span>
+                        <p><span ng-hide="!listing.beds">{{listing.beds}} Beds </span><span ng-hide="!listing.baths">&bull; {{listing.baths}} Baths </span><span ng-hide="!listing.square_feet">&bull; {{listing.square_feet}} Sq Ft</span></p>
+                   </span>
+                </a>
+                <span class="item item-search-results-ad" ng-if="!listing.isListing && listings[listings.length-1] != listing && listing.ad.link_url != '#'">
+                    <a ng-href="{{listing.ad.link_url}}">
+                        <img src="{{adurl}}/{{listing.ad.name}}" />
+                    </a>
+                </span>
+                <span class="item item-search-results-ad" ng-if="!listing.isListing && listings[listings.length-1] != listing && listing.ad.link_url == '#'">
+                    <img src="{{adurl}}/{{listing.ad.name}}" />
+                </span>
+            </span>
         	
-            <!--ng-if="!listing.isListing && listing.ad.link_url != '#'"-->
-
-        	<a  
-               ng-class="{'item item-thumbnail-left': listing.isListing, 'item item-search-results-ad': !listing.isListing}" 
-        	   ng-repeat="listing in listings"
-        	   ng-href="{{listing.isListing ? '#/tab/home/' + listing.mls_number : listing.ad.link_url}}">
-
-
-        	   <span ng-if="listing.isListing">
-	        	   	<img src="http://images-homeview.re605.com/images/property/{{listing.mls_number}}/1.jpg">
-
-					<strong>{{getCurrency(listing.price)}}</strong><span> &bull; {{listing.address}}</span>
-					<p><span ng-hide="!listing.beds">{{listing.beds}} Beds </span><span ng-hide="!listing.baths">&bull; {{listing.baths}} Baths </span><span ng-hide="!listing.square_feet">&bull; {{listing.square_feet}} Sq Ft</span></p>
-        	   </span>
-        	   <span ng-if="!listing.isListing && listings[listings.length-1] != listing">
-        	   		<img src="{{adurl}}/{{listing.ad.name}}" />
-        	   </span>
-        		<!--<a class="item item-thumbnail-left" href="#/tab/home/{{item.mls_number}}" ng-if="item.isListing">
-					
-				</a>
-	            <a class="item" href="{{item.ad.link_url}}" target="_blank" ng-if="!item.isListing"><img src="{{adurl}}/{{item.ad.name}}" /></a>-->
-        	</a>
-            <!--<span ng-if="!listing.isListing && listings[listings.length-1] != listing && listing.ad.link_url == '#'">
-                <img src="{{adurl}}/{{listing.ad.name}}" />
-           </span>-->
 		</div>
 
 		
