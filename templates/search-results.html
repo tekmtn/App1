@@ -20,9 +20,9 @@
 
         <div class="list search-results-container" ng-hide="listings.length == 0">
         	
-            
+            <!--ng-if="!listing.isListing && listing.ad.link_url != '#'"-->
 
-        	<a ng-if="!listing.isListing && listing.ad.link_url != '#'" 
+        	<a  
                ng-class="{'item item-thumbnail-left': listing.isListing, 'item item-search-results-ad': !listing.isListing}" 
         	   ng-repeat="listing in listings"
         	   ng-href="{{listing.isListing ? '#/tab/home/' + listing.mls_number : listing.ad.link_url}}">
@@ -42,9 +42,9 @@
 				</a>
 	            <a class="item" href="{{item.ad.link_url}}" target="_blank" ng-if="!item.isListing"><img src="{{adurl}}/{{item.ad.name}}" /></a>-->
         	</a>
-            <span ng-if="!listing.isListing && listings[listings.length-1] != listing && listing.ad.link_url == '#'">
+            <!--<span ng-if="!listing.isListing && listings[listings.length-1] != listing && listing.ad.link_url == '#'">
                 <img src="{{adurl}}/{{listing.ad.name}}" />
-           </span>
+           </span>-->
 		</div>
 
 		
