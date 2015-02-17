@@ -67,7 +67,6 @@ angular.module('homeviewapp.controllers', [])
             //console.log("getting ad");
             Ads.gethome().then(function(ads) {
                 var homead = ads[0];
-                console.log("HomeAd", homead);
                 if(homead != undefined) {
                     var homelink = "";
                     if(homead.link_url != "#") {
