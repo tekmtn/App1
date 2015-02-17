@@ -68,8 +68,13 @@ angular.module('homeviewapp.controllers', [])
             Ads.gethome().then(function(ads) {
                 var homead = ads[0];
                 //console.log(homead);
+                var homelink = "";
+                if(homead.link_url != "#") {
+                    homelink = "<a href='" + homead.link_url + "' target='_blank'><img src='" + $scope.adurl + homead.name + "' /></a>";
+                } else {
+                    homelink = "<img src='" + $scope.adurl + homead.name + "' />";
+                }
 
-                var homelink = "<a href='" + homead.link_url + "' target='_blank'><img src='" + $scope.adurl + homead.name + "' /></a>";
                 document.getElementById('home_ad_container').innerHTML = homelink;
                 $scope.adLoaded = true; 
                 $scope.loading = false;
@@ -150,7 +155,14 @@ angular.module('homeviewapp.controllers', [])
 
     $scope.initializeMap = function() {
         Ads.getfooter().then(function(ads) {
-            var link = "<a href='" + ads[0].link_url + "' target='blank'><img src='" + $scope.adurl + ads[0].name + "' /></a>";
+
+            var link = "";
+            if(ads[0].link_url != "#") {
+                link = "<a href='" + ads[0].link_url + "' target='_blank'><img src='" + $scope.adurl + ads[0].name + "' /></a>";
+            } else {
+                link = "<img src='" + $scope.adurl + ads[0].name + "' />";
+            }
+
             document.getElementById('footer_ad_container').innerHTML = link;
         });
 
