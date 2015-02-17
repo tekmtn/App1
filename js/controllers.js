@@ -216,23 +216,6 @@ angular.module('homeviewapp.controllers', [])
         $scope.map.on('dragend', $scope.mapGetListingsByBounds);
         $scope.mapGetListingsByBounds();
         
-
-        function onLocationFound(e) {
-            
-            ErrorLog.store({description: "location found"});
-
-            $scope.lat = e.latlng.lat;
-            $scope.lng = e.latlng.lng;
-            $scope.map.setView([$scope.lat, $scope.lng], 17);
-
-            $scope.map.on('dragend', $scope.mapGetListingsByBounds);
-            /*google.maps.event.addListener($scope.map, 'idle', function(event) {
-                $scope.mapGetListingsByBounds();
-            });*/
-
-            $scope.mapGetListingsByBounds();
-        }
-
         function onLocationFound(e) {
             $scope.lat = e.latlng.lat;
             $scope.lng = e.latlng.lng;
@@ -247,7 +230,7 @@ angular.module('homeviewapp.controllers', [])
         }
 
         function onLocationError(e) {
-            ErrorLog.store({description: "error location not found"});
+            //ErrorLog.store({description: "error location not found"});
             $scope.map.setView([$scope.lat, $scope.lng], 17);
 
             $scope.map.on('dragend', $scope.mapGetListingsByBounds);
