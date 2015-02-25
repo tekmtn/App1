@@ -45,7 +45,7 @@ angular.module('homeviewapp.controllers', [])
                 } else {
                     alert("using latest version");
                 }
-            }
+            });
         });
           //var testversion = AppVersion.getversion();
           //alert("test version: " + testversion);
