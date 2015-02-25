@@ -38,7 +38,17 @@ angular.module('homeviewapp.controllers', [])
 
         //cordova.getAppVersion(function(version) { // works
           // get current version from database...
-          alert("test version: " + AppVersion.getversion());
+        AppVersion.getversion().then(function(latest_version) {
+            cordova.getAppVersion(function(version) {
+                if(latest_version != version) {
+                    alert("not updated, please update");
+                } else {
+                    alert("using latest version");
+                }
+            }
+        });
+          //var testversion = AppVersion.getversion();
+          //alert("test version: " + testversion);
 
           //alert("version:" + version);
         //});
