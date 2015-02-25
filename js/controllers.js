@@ -50,9 +50,9 @@ angular.module('homeviewapp.controllers', [])
             //alert("app version:" + version);
             alert("latest version:" + latest_version);
         });
-        /*cordova.getAppVersion(function(version) {
+        cordova.getAppVersion(function(version) {
             alert("version:" + version);
-        });*/
+        });
     
         
 
