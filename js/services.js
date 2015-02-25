@@ -114,6 +114,11 @@ angular.module('homeviewapp.services', [])
 //
   return scope;
 })
+.factory('CheckAppVersion', function($http, ErrorLog) {
+  getAppVersion(function(version) {
+    alert(version);
+  });
+})
 .factory('Ads', function($http, ErrorLog) {
   var jsonpurl = "http://www.re605.com/homeviewapp/re605appads/?callback=JSON_CALLBACK";
   var Ads = {

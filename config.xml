@@ -32,6 +32,7 @@
     <gap:plugin name="com.adobe.plugins.gaplugin" />
     <gap:plugin name="org.apache.cordova.geolocation" />
     <gap:plugin name="org.apache.cordova.inappbrowser" />
+    <gap:plugin name="net.bgta.phonegap.plugin.appversion" version="1.1.1" />
 
     <feature name="InAppBrowser">
         <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
@@ -41,7 +42,4 @@
     <gap:config-file platform="ios" parent="NSLocationAlwaysUsageDescription" overwrite="false"> 
         <array><string>Allow GPS</string></array>
     </gap:config-file> 
-
-    
-
 </widget>
