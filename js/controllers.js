@@ -1,7 +1,7 @@
 
 angular.module('homeviewapp.controllers', [])
 
-.controller('AdCtrl', function($scope,$http,$state,$location, Ads, CheckAppVersion) {
+.controller('AdCtrl', function($scope,$http,$state,$location, Ads) {
     //console.log("AdCtrl");
 
     $scope.adurl = "http://www.re605.com/_client_media/ads/";
