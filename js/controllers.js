@@ -36,6 +36,11 @@ angular.module('homeviewapp.controllers', [])
         }
         
 
+        cordova.getAppVersion(function(version) { // works
+          // get current version from database...
+          alert("version:" + version);
+        });
+
         //console.log($scope);
         //console.log(window.localStorage["lastViewedAd"]);
         
