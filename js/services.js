@@ -115,17 +115,21 @@ angular.module('homeviewapp.services', [])
   return scope;
 })
 .factory('AppVersion', function($http, ErrorLog) {
-  var jsonpurl = "http://www.re605.com/homeviewapp/re605appversion/?callback=JSON_CALLBACK";
+  var jsonpurl = "http://www.re605.com/homeviewapp/re605appversion";
   var AppVersion = {
     getversion: function() {
-      $http.jsonp(jsonpurl).success(function(data) {
-        console.log(data);
+      console.log("getting app version...");
+      $http.jsonp(jsonpurl, {params: {callback: "JSON_CALLBACK"}}).success(function(data) {
+        console.log("success", data);
         if(data.result == "success") {
           return data.version;
         } else {
           //alert("There was a problem retrieving the app version. This issue has been logged and reported.");
           ErrorLog.store({url: jsonpurl, params: {mls: mls, type: "json"}, description: "unable to retrieve app version from services.Factory.AppVersion.version, jsonp succedded."});
         }
+      }).error(function(data, status) {
+        console.log("error",data,status);
+        alert("There was a problem retrieving the app version. This issue has been logged and reported.");
       });
     }
   };
