@@ -1,7 +1,7 @@
 
 angular.module('homeviewapp.controllers', [])
 
-.controller('AdCtrl', function($scope,$http,$state,$location, Ads) {
+.controller('AdCtrl', function($scope,$http,$state,$location, Ads, AppVersion) {
     //console.log("AdCtrl");
 
     $scope.adurl = "http://www.re605.com/_client_media/ads/";
@@ -38,7 +38,9 @@ angular.module('homeviewapp.controllers', [])
 
         cordova.getAppVersion(function(version) { // works
           // get current version from database...
-          alert("version:" + version);
+          alert("test version: " + AppVersion.getversion());
+
+          //alert("version:" + version);
         });
 
         //console.log($scope);

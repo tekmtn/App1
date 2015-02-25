@@ -114,6 +114,23 @@ angular.module('homeviewapp.services', [])
 //
   return scope;
 })
+.factory('AppVersion', function($http, ErrorLog) {
+  var jsonpurl = "http://www.re605.com/homeviewapp/re605appversion/?callback=JSON_CALLBACK";
+  var AppVersion = {
+    getversion: function() {
+      $http.jsonp(jsonpurl).success(function(data) {
+        console.log(data);
+        if(data.result == "success") {
+          return data.version;
+        } else {
+          //alert("There was a problem retrieving the app version. This issue has been logged and reported.");
+          ErrorLog.store({url: jsonpurl, params: {mls: mls, type: "json"}, description: "unable to retrieve app version from services.Factory.AppVersion.version, jsonp succedded."});
+        }
+      });
+    }
+  };
+  return AppVersion;
+})
 .factory('Ads', function($http, ErrorLog) {
   var jsonpurl = "http://www.re605.com/homeviewapp/re605appads/?callback=JSON_CALLBACK";
   var Ads = {
