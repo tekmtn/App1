@@ -46,9 +46,14 @@ angular.module('homeviewapp.controllers', [])
             });
         });*/
 
-        cordova.getAppVersion(function(version) {
-            alert("version:" + version);
-        });
+        if(cordova != undefined) {
+            cordova.getAppVersion(function(version) {
+                alert("version:" + version);
+            });
+        }
+        
+
+        
 
           //var testversion = AppVersion.getversion();
           //alert("test version: " + testversion);

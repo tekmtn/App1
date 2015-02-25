@@ -2,8 +2,8 @@
 <widget xmlns   = "http://www.w3.org/ns/widgets"
     xmlns:gap   = "http://phonegap.com/ns/1.0"
     id          = "com.tekmtn.homeviewapp"
-    versionCode = "14" 
-    version     = "1.1.2">
+    versionCode = "15" 
+    version     = "1.1.21">
 
     <name>HomeVIEW Real Estate Listings</name>
     <description>
@@ -29,9 +29,9 @@
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
 
-    <gap:plugin name="com.adobe.plugins.gaplugin" />
-    <gap:plugin name="org.apache.cordova.geolocation" />
-    <gap:plugin name="org.apache.cordova.inappbrowser" />
+    <gap:plugin name="com.adobe.plugins.gaplugin" version="2.4.0" />
+    <gap:plugin name="org.apache.cordova.geolocation" version="0.3.10" />
+    <gap:plugin name="org.apache.cordova.inappbrowser" version="0.5.2" />
     <gap:plugin name="uk.co.whiteoctober.cordova.appversion" version="0.1.4" />
 
     <feature name="InAppBrowser">
