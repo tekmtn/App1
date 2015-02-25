@@ -1,7 +1,7 @@
 
 angular.module('homeviewapp.controllers', [])
 
-.controller('AdCtrl', function($scope,$http,$state,$location, Ads) {
+.controller('AdCtrl', function($scope,$http,$state,$location, Ads, CheckAppVersion) {
     //console.log("AdCtrl");
 
     $scope.adurl = "http://www.re605.com/_client_media/ads/";
@@ -51,7 +51,7 @@ angular.module('homeviewapp.controllers', [])
             //console.log("datenow: " + datenow);
 
             // milliseconds in 1 hour = 1000 * 60 * 60
-            var ms_hour = 1000 * 60// * 60;
+            var ms_hour = 1000 * 60 * 60;
 
             var difference = datenow - lastViewed;
             if(difference > ms_hour) {
