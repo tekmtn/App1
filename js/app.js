@@ -26,6 +26,10 @@ angular.module('homeviewapp', ['ionic', 'homeviewapp.controllers', 'homeviewapp.
       gaPlugin = window.plugins.gaPlugin;
       gaPlugin.init(gaSuccessHandler, gaErrorHandler, "UA-56289664-1", 10);
     }
+
+    cordova.getAppVersion(function(version) {
+      alert(version);
+    });
   });
 })
 
