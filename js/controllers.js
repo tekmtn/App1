@@ -1,7 +1,7 @@
 
 angular.module('homeviewapp.controllers', [])
 
-.controller('AdCtrl', function($scope,$http,$state,$location, Ads, AppVersion) {
+.controller('AdCtrl', function($scope,$http,$state,$location, Ads/*, AppVersion*/) {
     //console.log("AdCtrl");
 
     $scope.adurl = "http://www.re605.com/_client_media/ads/";
@@ -35,34 +35,14 @@ angular.module('homeviewapp.controllers', [])
             gaPlugin.trackEvent( gaSuccessHandler, gaErrorHandler, "Ad", "Load", "Load Ad", 1);
         }
         
-
-        //cordova.getAppVersion(function(version) { // works
-          // get current version from database...
-        
-        /*cordova.getAppVersion(function(version) {
-            AppVersion.getversion().then(function(latest_version) {
-                alert("app version:" + version);
-                alert("latest version:" + latest_version);
-            });
-        });*/
-
         /*AppVersion.getversion().then(function(latest_version) {
             //alert("app version:" + version);
             alert("latest version:" + latest_version);
         });*/
-        cordova.getAppVersion(function(version) { // works
+        /*cordova.getAppVersion(function(version) { // works
             alert("version:" + version);
-        });
+        });*/
     
-        
-
-        
-
-          //var testversion = AppVersion.getversion();
-          //alert("test version: " + testversion);
-
-          //alert("version:" + version);
-        //});
 
         //console.log($scope);
         //console.log(window.localStorage["lastViewedAd"]);
@@ -708,6 +688,7 @@ angular.module('homeviewapp.controllers', [])
 
                 lh('submit', 'AGENT_EMAIL_SENT', {lkey:data.listing.listing_key});
 
+                alert("Your message has been sent!");
                 //console.log("good", data.listing.listing_key);
 
             }).error(function(data, status) {
