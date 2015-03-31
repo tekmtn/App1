@@ -2,7 +2,7 @@
 <widget xmlns   = "http://www.w3.org/ns/widgets"
     xmlns:gap   = "http://phonegap.com/ns/1.0"
     id          = "com.tekmtn.homeviewapp"
-    versionCode = "22" 
+    versionCode = "10201" 
     version     = "1.2.2">
 
     <name>HomeVIEW Real Estate Listings</name>
