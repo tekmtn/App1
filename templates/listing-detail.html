@@ -122,6 +122,13 @@
   	<h3>Features</h3>
   	<p>{{listing.features}}</p>
 
+    <div ng-hide="lat == 0 || lng == 0">
+      <h3>Location</h3>
+      <div id="map-container">
+        <img src="https://maps.googleapis.com/maps/api/staticmap?center={{lat}},{{lng}}&zoom=16&size={{mapWidth}}x{{mapHeight}}&markers=color:red%7C{{lat}},{{lng}}" />
+      </div>
+    </div>
+
     <h3>Agency Information</h3>
     <p>
       <span ng-hide="!listing.agency_name"><a href='tel:{{listing.agency_name}}'>{{listing.agency_name}}</a><br /></span>

@@ -1,0 +1,28 @@
+<ion-view title="Open Houses">
+  <ion-header-bar align-title="left" class="bar-positive">
+    <h1 class="title">Open Houses</h1>
+  </ion-header-bar>
+  <ion-content class="has-header">
+    <!-- ng-click="listings.splice($index, 1)" -->
+    <!-- <ion-delete-button class="ion-minus-circled"></ion-delete-button> -->
+
+    <div class='app-container'>
+
+      <div class="list">
+          <a ng-repeat="item in listings" class="item item-thumbnail-left" href="#/tab/home/{{item.mls_number}}">
+            <img src="http://images-homeview.re605.com/images/property/{{item.mls_number}}/1.jpg">
+
+            <strong>{{getCurrency(item.price)}}</strong>
+            <span> &bull; {{item.address}}</span>
+            <span ng-hide="!item.beds"> &bull; {{item.beds}} Beds </span>
+            <span ng-hide="!item.baths">&bull; {{item.baths}} Baths </span>
+            <span ng-hide="!item.square_feet">&bull; {{item.square_feet}} Sq Ft</span>
+
+            <p>Open House: {{item.open_house_date | date:'mediumDate' }} {{item.open_house_start}} - {{item.open_house_end}}</p>
+
+          </a>
+      </div>
+
+    </div>
+  </ion-content>
+</ion-view>

@@ -4,6 +4,15 @@
 	    <button class="button" ng-click="goBack()">Back</button>
 	  </div>
 	  <h1 class="title">Search Results</h1>
+      <div class="buttons">
+        <label class='header-label'>Sort:</label>
+        <select id="sortby" ng-model="sortby" ng-change="change_sortby()">
+            <option value='distance'>Distance</option>
+            <option value='pricelowtohigh'>Price: Low to High</option>
+            <option value='pricehightolow'>Price: High to Low</option>
+        </select>
+        
+      </div>
 	</ion-header-bar>
   <ion-content has-header="true" padding="true">
   	<div class='searchResults' ng-hide="!showResults">

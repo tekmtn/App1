@@ -24,7 +24,7 @@ angular.module('homeviewapp.services', [])
       return favorites[favoriteId];
     },
     save: function(mls) {
-      console.log("localstorage" + window.localStorage["favoriteListings"]);
+      console.log("localstorage favorites:" + window.localStorage["favoriteListings"]);
       var favoriteListings = [];
       if(window.localStorage["favoriteListings"] !== undefined) {
           favoriteListings = JSON.parse(window.localStorage['favoriteListings']);
@@ -157,7 +157,7 @@ angular.module('homeviewapp.services', [])
           return response.data.ads;
 
         } else {
-            //alert("There was a problem retrieving this listing. This issue has been logged and reported.");
+            //alert("There was a problem retrieving this footer ad. This issue has been logged and reported.");
             ErrorLog.store({url: jsonpurl, params: {adtype: "footer", type: "json"}, description: "unable to retrieve ad from from services.Factory.Ads.getfooter, jsonp succedded."});
         }
       });
@@ -194,7 +194,19 @@ angular.module('homeviewapp.services', [])
 
 .factory('searchcriteria', function() {
 
-  var criteria = [{location: null, state: "SD", lat:null, lng:null, radius: 5, minprice: 50000, maxprice: 100000, minbeds: 1, maxbeds: 3, minbaths: 1, maxbaths: 2}];
+  var criteria = [{location: null, 
+                   state: "SD", 
+                   lat:null, 
+                   lng:null, 
+                   radius: 1, 
+                   minprice: 50000, 
+                   maxprice: 100000, 
+                   minbeds: 1, 
+                   maxbeds: 3, 
+                   minbaths: 1, 
+                   maxbaths: 2, 
+                   propertytype: 'Single Family',
+                   sortby: 'distance'}];
 
   return {
     store: function(c) {

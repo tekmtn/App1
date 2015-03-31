@@ -57,6 +57,8 @@
                 <!--<select ng-model="radius" id="radius" ng-options="radiuses.miles for radius in radiuses"></select>-->
                 <!--<select ng-model="radius" id="radius" ng-options="radius.miles for radius in radiuses track by radius.miles"></select>-->
                 <select id='radius' ng-model="radius">
+                    <option value='.5'>1/2 mile</option>
+                    <option value='1'>1 mile</option>
                     <option value='5'>5 miles</option>
                     <option value='10'>10 miles</option>
                     <option value='25'>25 miles</option>
@@ -64,6 +66,20 @@
                 </select>
             </label>
 
+            <label class='item item-input item-select' style='height:47px;'>
+                <div class='input-label'>
+                    Property Type:
+                </div>
+                <!--<select ng-model="radius" id="radius" ng-options="radiuses.miles for radius in radiuses"></select>-->
+                <!--<select ng-model="radius" id="radius" ng-options="radius.miles for radius in radiuses track by radius.miles"></select>-->
+                <select id='propertytype' ng-model="propertytype">
+                    <option value=''>Any</option>
+                    <option value='Single Family'>Single Family</option>
+                    <option value='Resi 1 acre or less'>Residential &lt; 1 acre</option>
+                    <option value='Resi Over 1 acre'>Residential &gt; 1 acre</option>
+                    <option value='Twin Home'>Twin Home</option>
+                </select>
+            </label>
 
             <div class="item item-divider">
             Price: Min:{{minprice}}&nbsp;&nbsp;&nbsp;Max:{{maxprice}}
@@ -93,7 +109,20 @@
                 <slider floor="1" ceiling="10" ng-model-low="minbaths" ng-model-high="maxbaths"></slider>
             </div>
 
-            
+            <label class='item item-input item-select' style='height:47px;'>
+                <div class='input-label'>
+                    Sort By:
+                </div>
+                <!--<select ng-model="radius" id="radius" ng-options="radiuses.miles for radius in radiuses"></select>-->
+                <!--<select ng-model="radius" id="radius" ng-options="radius.miles for radius in radiuses track by radius.miles"></select>-->
+                <select id='sortby' ng-model="sortby">
+                    <option value='distance'>Distance</option>
+                    <option value='pricelowtohigh'>Price: Low to High</option>
+                    <option value='pricehightolow'>Price: High to Low</option>
+                </select>
+            </label>
+
+                        
         </div>
 
         <button ng-click='search();' class='button button-block button-positive icon-right ion-search'>
@@ -104,3 +133,4 @@
 
   </ion-content>
 </ion-view>
+
