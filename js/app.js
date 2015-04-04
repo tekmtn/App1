@@ -30,9 +30,9 @@ angular.module('homeviewapp', ['ionic', 'homeviewapp.controllers', 'homeviewapp.
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+.config(function($stateProvider, $urlRouterProvider) {
 
-  $ionicConfigProvider.tabs.position('bottom');
+  //$ionicConfigProvider.tabs.position('bottom');
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
