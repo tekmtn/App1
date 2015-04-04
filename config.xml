@@ -2,8 +2,8 @@
 <widget xmlns   = "http://www.w3.org/ns/widgets"
     xmlns:gap   = "http://phonegap.com/ns/1.0"
     id          = "com.tekmtn.homeviewapp"
-    versionCode = "10204" 
-    version     = "1.2.4">
+    versionCode = "10205" 
+    version     = "1.2.5">
 
     <name>HomeVIEW Real Estate Listings</name>
     <description>
@@ -28,14 +28,20 @@
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
+    <preference name="BackupWebStorage" value="none"/>
 
     <gap:plugin name="com.adobe.plugins.gaplugin" version="2.4.0" />
     <gap:plugin name="org.apache.cordova.geolocation" version="0.3.10" />
     <gap:plugin name="org.apache.cordova.inappbrowser" version="0.5.2" />
+    <!--<gap:plugin name="uk.co.whiteoctober.cordova.appversion" version="0.1.4" />-->
 
     <feature name="InAppBrowser">
         <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
         <param name="ios-package" value="CDVInAppBrowser" />
+    </feature>
+
+    <feature name="StatusBar">
+      <param name="ios-package" value="CDVStatusBar" onload="true"/>
     </feature>
 
     <gap:config-file platform="ios" parent="NSLocationAlwaysUsageDescription" overwrite="false"> 
