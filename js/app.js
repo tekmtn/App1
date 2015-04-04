@@ -30,11 +30,9 @@ angular.module('homeviewapp', ['ionic', 'homeviewapp.controllers', 'homeviewapp.
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+.config(function($stateProvider, $urlRouterProvider) {
 
-  $ionicConfigProvider.tabs.position('bottom');
-  //$ionicConfigProvider.views.forwardCache(true);
-  //$ionicConfigProvider.views.maxCache(0);
+  //$ionicConfigProvider.tabs.position('bottom'); // crashes when used within build.phonegap
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
