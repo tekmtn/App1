@@ -13,28 +13,34 @@
   </div>
 </div>
 
-<ion-tabs class="tabs-icon-top">
+<ion-tabs class="tabs-icon-bottom">
 
 
   <!-- Pets Tab -->
   <ion-tab title="Map" icon="icon ion-earth" href="#/map/home">
     <ion-nav-view name="map-home"></ion-nav-view>
   </ion-tab>
+
+
   <!-- Adopt Tab -->
   <ion-tab title="Search" icon="icon ion-search" href="#/tab/search">
     <ion-nav-view name="tab-search"></ion-nav-view>
   </ion-tab>
 
-    <!-- Open House Tab -->
+  <!-- Open House Tab -->
   <ion-tab title="Open Houses" icon="icon ion-home" href="#/tab/openhouses">
     <ion-nav-view name="tab-openhouses"></ion-nav-view>
   </ion-tab>
+
 
   <!-- About Tab -->
   <ion-tab title="Favorites" icon="icon ion-heart" href="#/tab/favorites">
     <ion-nav-view name="tab-favorites"></ion-nav-view>
   </ion-tab>
 
-  <ion-nav-view name="tab-listing-details"></ion-nav-view>
+  <ion-tab title="Details" href="#/tab/listing-details" hidden="true">
+    <ion-nav-view name="tab-listing-details"></ion-nav-view>
+  </ion-tab>
+  
 
 </ion-tabs>
