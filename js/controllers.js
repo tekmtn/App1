@@ -100,6 +100,17 @@ angular.module('homeviewapp.controllers', [])
     //console.log("Calling init");
     $scope.init();
 })
+.controller('FooterCtrl', function($scope, Ads, ErrorLog) {
+    $scope.adurl = "http://www.re605.com/_client_media/ads/";
+    $scope.footer_ad;
+    $scope.footer_link;
+
+    Ads.getfooter().then(function(ads) {
+        $scope.footer_ad = $scope.adurl + ads[0].name;
+        $scope.footer_has_link = ads[0].link_url != '#' ? true : false;
+        $scope.footer_link = ads[0].link_url;
+    });
+})
 .controller('HomeCtrl', function($scope, $window, $http, Ads, Favorites, ErrorLog) {
 
     $scope.lat = "43.541033";
@@ -166,17 +177,6 @@ angular.module('homeviewapp.controllers', [])
     
 
     $scope.initializeMap = function() {
-        Ads.getfooter().then(function(ads) {
-
-            var link = "";
-            if(ads[0].link_url != "#") {
-                link = "<a href='" + ads[0].link_url + "' target='_blank'><img src='" + $scope.adurl + ads[0].name + "' /></a>";
-            } else {
-                link = "<img src='" + $scope.adurl + ads[0].name + "' />";
-            }
-            document.getElementById('footer_ad_container').innerHTML = link;
-        });
-
         //ErrorLog.store({description: "initializing map"});
 
         $scope.map = L.map('map', {tap: false});
@@ -529,22 +529,39 @@ angular.module('homeviewapp.controllers', [])
         return parts.join(".");
     }
 })
+.controller('OpenHousesCtrl', function($scope, $http, currency, Ads, ErrorLog) {
+    $scope.jsonpurl = "http://www.re605.com/homeviewapp/re605appgetopenhouses/?callback=JSON_CALLBACK";
+    $scope.adurl = "http://www.re605.com/_client_media/ads/";
 
+    $scope.getCurrency = function(amt) {
+        return '$' + currency.get(amt);
+    }
+
+    $scope.getOpenHouses = function() {
+        $http.jsonp($scope.jsonpurl, {params: {
+            type: "json"
+        }}).success(function(data){
+            if(data.result == "success") {
+                if(data.listings !== false) {
+                    $scope.listings = data.listings;
+                }
+            } else {
+                alert("There was a problem retrieving open houses. This issue has been logged and reported.");
+                ErrorLog.store({url: $scope.jsonpurl, params: {mls: $stateParams.mls, type: "json"}, description: "problem retrieving open houses, jsonp succedded"});
+            }
+        }).error(function(data, status) {
+            alert("There was a problem retrieving open houses. This issue has been logged and reported.");
+            ErrorLog.store({url: $scope.jsonpurl, params: {mls: $stateParams.mls, type: "json"}, description: "problem retrieving open houses, jsonp failed"});
+        });
+    }
+
+    $scope.getOpenHouses();
+})
 .controller('FavoritesCtrl', function($scope, $http, Favorites, Ads, currency, ErrorLog) {
 
     $scope.jsonpurl = "http://www.re605.com/homeviewapp/re605appgetfavorites/?callback=JSON_CALLBACK";
     $scope.favoritesCount = 0;
     $scope.adurl = "http://www.re605.com/_client_media/ads/";
-
-    Ads.getfooter().then(function(ads) {
-        var link = "";
-        if(ads[0].link_url != "#") {
-            link = "<a href='" + ads[0].link_url + "' target='_blank'><img src='" + $scope.adurl + ads[0].name + "' /></a>";
-        } else {
-            link = "<img src='" + $scope.adurl + ads[0].name + "' />";
-        }
-        document.getElementById('footer_ad_container').innerHTML = link;
-    });
 
     $scope.getCurrency = function(amt) {
         return '$' + currency.get(amt);
@@ -605,16 +622,6 @@ angular.module('homeviewapp.controllers', [])
         gaPlugin.trackEvent( gaSuccessHandler, gaErrorHandler, "Favorites", "Click", "View Favorite", $scope.favorite.mls_number);
     }
     
-
-    Ads.getfooter().then(function(ads) {
-        var link = "";
-        if(ads[0].link_url != "#") {
-            link = "<a href='" + ads[0].link_url + "' target='_blank'><img src='" + $scope.adurl + ads[0].name + "' /></a>";
-        } else {
-            link = "<img src='" + $scope.adurl + ads[0].name + "' />";
-        }
-        document.getElementById('footer_ad_container').innerHTML = link;
-    });
 })
 
 .controller('ListingDetailCtrl', function($scope, $stateParams, $http, currency, $window, Ads, Favorites, ErrorLog) {
@@ -624,6 +631,12 @@ angular.module('homeviewapp.controllers', [])
     $scope.jsonpurl = "http://www.re605.com/homeviewapp/re605appgetlisting/?callback=JSON_CALLBACK";
     $scope.listing = null;
     $scope.gallery = "";
+
+    $scope.mapWidth;
+    $scope.mapHeight = '300';
+
+    $scope.lat = "43.541033";
+    $scope.lng = "-96.7457591";
 
     $scope.fieldDescriptions = [];
     $scope.fieldDescriptions["beds"] = "Beds";
@@ -642,17 +655,6 @@ angular.module('homeviewapp.controllers', [])
     $scope.contact.email = "";
     $scope.contact.phone = "";
     $scope.contact.message = "";*/
-
-    Ads.getfooter().then(function(ads) {
-        var link = "";
-        if(ads[0].link_url != "#") {
-            link = "<a href='" + ads[0].link_url + "' target='_blank'><img src='" + $scope.adurl + ads[0].name + "' /></a>";
-        } else {
-            link = "<img src='" + $scope.adurl + ads[0].name + "' />";
-        }
-        document.getElementById('footer_ad_container').innerHTML = link;
-    });
-
 
     $scope.goBack = function() {
         $window.history.back();
@@ -736,6 +738,9 @@ angular.module('homeviewapp.controllers', [])
 
             if(data.result == "success") {
                 $scope.listing = data.listing;
+                $scope.lat = $scope.listing.latitude;
+                $scope.lng = $scope.listing.longitude;
+
                 //console.log("metrics reporting: ", $scope.listing.listing_key);
                 lh('submit', 'DETAIL_PAGE_VIEWED', {lkey:$scope.listing.listing_key}); 
                 $scope.isFavorited = Favorites.isFavorite($scope.listing.mls_number);
@@ -750,7 +755,9 @@ angular.module('homeviewapp.controllers', [])
                         $scope.listing.default_picture = $scope.listing.photos[0];
                     }*/
                 };
+                var offsetWidth = document.getElementById('map-container').offsetWidth;
 
+                $scope.mapWidth = offsetWidth > 0 ? offsetWidth : 600;
                 //console.log($scope.listing.photos);
             } else {
                 alert("There was a problem retrieving the listing. This issue has been logged and reported.");
@@ -797,18 +804,10 @@ angular.module('homeviewapp.controllers', [])
     }
     
 
-    Ads.getfooter().then(function(ads) {
-        var link = "";
-        if(ads[0].link_url != "#") {
-            link = "<a href='" + ads[0].link_url + "' target='_blank'><img src='" + $scope.adurl + ads[0].name + "' /></a>";
-        } else {
-            link = "<img src='" + $scope.adurl + ads[0].name + "' />";
-        }
-        document.getElementById('footer_ad_container').innerHTML = link;
-    });
-
     //$scope.radiuses = [{miles: 5}, {miles: 10}, {miles: 25}, {miles: 50}];
     $scope.radiuses = [
+      {miles:.5},
+      {miles:1},
       {miles:5},
       {miles:10},
       {miles:25},
@@ -839,13 +838,15 @@ angular.module('homeviewapp.controllers', [])
     //alert(window.localStorage["lastSearchedZipCode"]);
     //$scope.useMyLocation = window.localStorage["lastSearchedUseMyLocation"] != undefined ? window.localStorage["lastSearchedUseMyLocation"] : false;
     $scope.location = window.localStorage["lastSearchedLocation"] != undefined ? window.localStorage["lastSearchedLocation"] : "";
-    $scope.radius = window.localStorage["lastSearchedRadius"] != undefined ? window.localStorage["lastSearchedRadius"] : 5;
+    $scope.radius = window.localStorage["lastSearchedRadius"] != undefined ? window.localStorage["lastSearchedRadius"] : 1;
     $scope.minbeds = window.localStorage["lastSearchedMinBeds"] != undefined ? window.localStorage["lastSearchedMinBeds"] : "1";
     $scope.maxbeds = window.localStorage["lastSearchedMaxBeds"] != undefined ? window.localStorage["lastSearchedMaxBeds"] : "3";
     $scope.minbaths = window.localStorage["lastSearchedMinBaths"] != undefined ? window.localStorage["lastSearchedMinBaths"] : "1";
     $scope.maxbaths = window.localStorage["lastSearchedMaxBaths"] != undefined ? window.localStorage["lastSearchedMaxBaths"] : "2";
     $scope.minprice = window.localStorage["lastSearchedMinPrice"] != undefined ? window.localStorage["lastSearchedMinPrice"] : "50000";
     $scope.maxprice = window.localStorage["lastSearchedMaxPrice"] != undefined ? window.localStorage["lastSearchedMaxPrice"] : "100000";
+    $scope.propertytype = window.localStorage["lastSearchedPropertyType"] != undefined ? window.localStorage["lastSearchedPropertyType"] : "Any";
+    $scope.sortby = window.localStorage["lastSearchedSortBy"] != undefined ? window.localStorage["lastSearchedSortBy"] : "distance";
 
     $scope.search = function() {
 
@@ -865,6 +866,8 @@ angular.module('homeviewapp.controllers', [])
         var maxbaths = document.getElementById("maxbaths").value;
         var minprice = document.getElementById("minprice").value;
         var maxprice = document.getElementById("maxprice").value;
+        var propertytype = document.getElementById("propertytype").value;
+        var sortby = document.getElementById("sortby").value;
 
         if(gaPlugin) {
             gaPlugin.trackEvent( gaSuccessHandler, gaErrorHandler, "Search", "Click", "Submit Search", location);
@@ -890,13 +893,15 @@ angular.module('homeviewapp.controllers', [])
             window.localStorage["lastSearchedMaxBaths"] = maxbaths;
             window.localStorage["lastSearchedMinPrice"] = minprice;
             window.localStorage["lastSearchedMaxPrice"] = maxprice;
+            window.localStorage["lastSearchedPropertyType"] = propertytype;
+            window.localStorage["lastSearchedSortBy"] = sortby;
 
             var c = [];
 
             if(useMyLocation) {
-                c = [{lat:$scope.lat, lng:$scope.lng, radius: radius, minprice: minprice, maxprice: maxprice, minbeds: minbeds, maxbeds: maxbeds, minbaths: minbaths, maxbaths: maxbaths}];
+                c = [{lat:$scope.lat, lng:$scope.lng, radius: radius, minprice: minprice, maxprice: maxprice, minbeds: minbeds, maxbeds: maxbeds, minbaths: minbaths, maxbaths: maxbaths, propertytype: propertytype, sortby: sortby}];
             } else {
-                c = [{location: location, state: "SD", radius: radius, minprice: minprice, maxprice: maxprice, minbeds: minbeds, maxbeds: maxbeds, minbaths: minbaths, maxbaths: maxbaths}];
+                c = [{location: location, state: "SD", radius: radius, minprice: minprice, maxprice: maxprice, minbeds: minbeds, maxbeds: maxbeds, minbaths: minbaths, maxbaths: maxbaths, propertytype: propertytype, sortby: sortby}];
             }
 
             //var c = [{location: location, state: "SD", lat:$scope.lat, lng:$scope.lng, radius: radius, minprice: minprice, maxprice: maxprice, minbeds: minbeds, maxbeds: maxbeds, minbaths: minbaths, maxbaths: maxbaths}];
@@ -957,15 +962,7 @@ angular.module('homeviewapp.controllers', [])
     $scope.adurl = "http://www.re605.com/_client_media/ads/";
     $scope.loaded = false;
 
-    Ads.getfooter().then(function(ads) {
-        var link = "";
-        if(ads[0].link_url != "#") {
-            link = "<a href='" + ads[0].link_url + "' target='_blank'><img src='" + $scope.adurl + ads[0].name + "' /></a>";
-        } else {
-            link = "<img src='" + $scope.adurl + ads[0].name + "' />";
-        }
-        document.getElementById('footer_ad_container').innerHTML = link;
-    });
+    $scope.sortby = "";
 
     $scope.goBack = function() {
         //$window.history.back();
@@ -979,6 +976,18 @@ angular.module('homeviewapp.controllers', [])
     $scope.getCurrency = function(amt) {
         return '$' + currency.get(amt);
     }
+
+    $scope.change_sortby = function() {
+        //console.log($scope.sortby);
+        criteria = searchcriteria.get();
+        //console.log(criteria);
+        criteria[0].sortby = $scope.sortby;
+        searchcriteria.store(criteria);
+
+        $scope.getResults();
+        //console.log(criteria);
+    }
+
     $scope.getResults = function() {
         criteria = searchcriteria.get();
 
@@ -996,6 +1005,8 @@ angular.module('homeviewapp.controllers', [])
 
         //var zipcode = $criteria.zipcode; //57106;
         //var radius = $criteria.radius; //5;
+
+        $scope.sortby = criteria[0].sortby;
 
         $http.jsonp($scope.jsonpurl, {params: {
                 criteria: criteria,

@@ -30,8 +30,9 @@ angular.module('homeviewapp', ['ionic', 'homeviewapp.controllers', 'homeviewapp.
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
+  $ionicConfigProvider.tabs.position('bottom');
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
@@ -39,12 +40,14 @@ angular.module('homeviewapp', ['ionic', 'homeviewapp.controllers', 'homeviewapp.
   $stateProvider
 
     .state('ad', {
+      cache: false,
       url: '/ad',
       abstract: true,
       templateUrl: 'templates/ads.html'
     })
 
     .state('ad.home', {
+      cache: false,
       url: '/home',
       views: {
         'ad-home': {
@@ -61,6 +64,7 @@ angular.module('homeviewapp', ['ionic', 'homeviewapp.controllers', 'homeviewapp.
     })
 
     .state('map.home', {
+      cache: false,
       url: '/home',
       views: {
         'map-home': {
@@ -104,7 +108,7 @@ angular.module('homeviewapp', ['ionic', 'homeviewapp.controllers', 'homeviewapp.
     .state('tab.listing-detail', {
       url: '/home/:mls',
       views: {
-        'tab-search': {
+        'tab-listing-details': {
           templateUrl: 'templates/listing-detail.html',
           controller: 'ListingDetailCtrl'
         }
@@ -112,6 +116,7 @@ angular.module('homeviewapp', ['ionic', 'homeviewapp.controllers', 'homeviewapp.
     })
 
     .state('tab.favorites', {
+      cache: false,
       url: '/favorites',
       views: {
         'tab-favorites': {
@@ -124,9 +129,19 @@ angular.module('homeviewapp', ['ionic', 'homeviewapp.controllers', 'homeviewapp.
     .state('tab.favorite-detail', {
       url: '/favorites/:favoriteId',
       views: {
-        'tab-search': {
+        'tab-listing-details': {
           templateUrl: 'templates/favorite-detail.html',
           controller: 'FavoriteDetailCtrl'
+        }
+      }
+    })
+
+    .state('tab.openhouses', {
+      url: '/openhouses',
+      views: {
+        'tab-openhouses': {
+          templateUrl: 'templates/tab-openhouses.html',
+          controller: 'OpenHousesCtrl'
         }
       }
     })
@@ -142,6 +157,7 @@ angular.module('homeviewapp', ['ionic', 'homeviewapp.controllers', 'homeviewapp.
     })
 
     .state('tab.search-results', {
+      cache: false,
       url: '/search/results',
       views: {
         'tab-search': {

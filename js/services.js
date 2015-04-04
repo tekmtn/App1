@@ -194,8 +194,20 @@ angular.module('homeviewapp.services', [])
 
 .factory('searchcriteria', function() {
 
-  var criteria = [{location: null, state: "SD", lat:null, lng:null, radius: 5, minprice: 50000, maxprice: 100000, minbeds: 1, maxbeds: 3, minbaths: 1, maxbaths: 2}];
-
+  var criteria = [{location: null, 
+                   state: "SD", 
+                   lat:null, 
+                   lng:null, 
+                   radius: 1, 
+                   minprice: 50000, 
+                   maxprice: 100000, 
+                   minbeds: 1, 
+                   maxbeds: 3, 
+                   minbaths: 1, 
+                   maxbaths: 2, 
+                   propertytype: 'Single Family',
+                   sortby: 'distance'}];
+                   
   return {
     store: function(c) {
       //console.log("setting");

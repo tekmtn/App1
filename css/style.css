@@ -11,13 +11,27 @@ html, body {
 div.scroll { 
 	height:100%;
 }
-
+.searchForm .item-select select {
+    right:inherit;
+    direction: ltr
+}
+.searchForm .item-select:after {
+    right:inherit;
+}
+.header-label {
+    font-size:14px;
+    font-weight:bold;
+    padding:10px 5px;
+}
 #map {
 	height:100%;
 }
-
-
-
+#map-container {
+    height:50%;
+}
+#listing-detail-map {
+    height:100%;
+}
 .map-loading {
     position:absolute;
     top:10px;
