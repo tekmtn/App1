@@ -28,6 +28,7 @@
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
+    <preference name="BackupWebStorage" value="none" />
 
     <gap:plugin name="com.adobe.plugins.gaplugin" version="2.4.0" />
     <gap:plugin name="org.apache.cordova.geolocation" version="0.3.10" />
@@ -37,6 +38,10 @@
     <feature name="InAppBrowser">
         <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
         <param name="ios-package" value="CDVInAppBrowser" />
+    </feature>
+
+    <feature name="StatusBar">
+      <param name="ios-package" value="CDVStatusBar" onload="true"/>
     </feature>
 
     <gap:config-file platform="ios" parent="NSLocationAlwaysUsageDescription" overwrite="false"> 
