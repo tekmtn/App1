@@ -9,18 +9,31 @@
     <div class='app-container'>
 
       <div class="list">
-          <a ng-repeat="item in listings" class="item item-thumbnail-left" href="#/tab/home/{{item.mls_number}}">
-            <img src="http://images-homeview.re605.com/images/property/{{item.mls_number}}/1.jpg">
+        <span ng-repeat="listing in listings">
+            <a ng-if="listing.isListing"
+               ng-href="#/tab/home/{{listing.mls_number}}"
+               class="item item-thumbnail-left">
+              <img src="http://images-homeview.re605.com/images/property/{{listing.mls_number}}/1.jpg">
 
-            <strong>{{getCurrency(item.price)}}</strong>
-            <span> &bull; {{item.address}}</span>
-            <span ng-hide="!item.beds"> &bull; {{item.beds}} Beds </span>
-            <span ng-hide="!item.baths">&bull; {{item.baths}} Baths </span>
-            <span ng-hide="!item.square_feet">&bull; {{item.square_feet}} Sq Ft</span>
+              <strong>{{getCurrency(listing.price)}}</strong>
+              <span> &bull; {{listing.address}}</span>
+              <span ng-hide="!listing.beds"> &bull; {{listing.beds}} Beds </span>
+              <span ng-hide="!listing.baths">&bull; {{listing.baths}} Baths </span>
+              <span ng-hide="!listing.square_feet">&bull; {{listing.square_feet}} Sq Ft</span>
 
-            <p>Open House: {{item.open_house_date | date:'mediumDate' }} {{item.open_house_start}} - {{item.open_house_end}}</p>
+              <p>Open House: {{listing.open_house_date | date:'mediumDate' }} {{listing.open_house_start}} - {{listing.open_house_end}}</p>
 
-          </a>
+            </a>
+            
+            <span class="item item-search-results-ad" ng-if="!listing.isListing && listings[listings.length-1] != listing && listing.ad.link_url != '#'">
+                <a ng-href="{{listing.ad.link_url}}">
+                    <img src="{{adurl}}/{{listing.ad.name}}" />
+                </a>
+            </span>
+            <span class="item item-search-results-ad" ng-if="!listing.isListing && listings[listings.length-1] != listing && listing.ad.link_url == '#'">
+                <img src="{{adurl}}/{{listing.ad.name}}" />
+            </span>
+        </span>
       </div>
 
     </div>
