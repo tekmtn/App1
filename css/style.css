@@ -5,11 +5,11 @@
 .angular-google-map-container { height: 400px; }*/
 
 html, body {
-	height:100%;
+    height:100%;
 }
 
 div.scroll { 
-	height:100%;
+    height:100%;
 }
 .searchForm .item-select select {
     right:inherit;
@@ -24,7 +24,7 @@ div.scroll {
     padding:10px 5px;
 }
 #map {
-	height:100%;
+    height:100%;
 }
 #map-container {
     height:50%;
@@ -46,51 +46,51 @@ div.scroll {
 }
 
 #preview {
-	height:50%;
-	display:none;
+    height:50%;
+    display:none;
 }
 
 div.previewBodyRow {
-	height:50%;
+    height:50%;
 }
 div.previewButtonsRow {
-	height:50%;
+    height:50%;
 }
 
 div#previewBody {
-	/*max-height:125px;*/
-	/*max-height:25%;*/
-	overflow:hidden;
+    /*max-height:125px;*/
+    /*max-height:25%;*/
+    overflow:hidden;
 }
 .previewText {
-	/*max-height:125px;*/
-	max-height:10%;
-	overflow:hidden;
+    /*max-height:125px;*/
+    max-height:10%;
+    overflow:hidden;
 }
 
 #btnClosePreview, #btnFavoriteListing {
-	margin:2px;
-	border:none;
+    margin:2px;
+    border:none;
 }
 
 .previewAddress {
-	float:left;
+    float:left;
 }
 .previewPrice {
-	float:right;
+    float:right;
 }
 .hide { 
-	display:none;
+    display:none;
 }
 .show {
-	display:block;
+    display:block;
 }
 
 .pull-left {
-	float:left;
+    float:left;
 }
 .pull-right {
-	float:right;
+    float:right;
 }
 .listingDetails {
     width:100%;
@@ -101,7 +101,7 @@ div#previewBody {
 }
 
 div.gm-style-iw, div.gm-style-iw div {
-	overflow:hidden !important;
+    overflow:hidden !important;
 }
 
 img.fav-thumb {
@@ -115,10 +115,10 @@ img.fav-thumb {
 }
 
 .galleryItemContainer {
-	float:left;
+    float:left;
 }
 .galleryItem {
-	max-width:200px;
+    max-width:200px;
 }
 
 
@@ -401,7 +401,9 @@ slider {
 }
 
 .footer-ad {
-    max-height:155px;
+    /* 160px with search button */
+    /* 116 without */
+    max-height:116px;
     width:100%;
     position:absolute;
     bottom:49px;
@@ -409,8 +411,11 @@ slider {
     text-align:center;
     background-color:#f8f8f8;
 }
+body.search .footer-ad {
+    max-height:160px;
+}
 .footer-ad-no-tabs {
-    max-height:155px;
+    max-height:116px;
     padding:5px;
     width:100%;
     position:absolute;
@@ -420,11 +425,20 @@ slider {
     background-color:#f8f8f8;
 }
 .footer-ad img {
-    max-height:126px;
+    max-height:95px;
     max-width:100%;
+}
+#search-button-container button {
+    width:98%;
+    margin:2px auto;
 }
 .has-tabs { /* 49 + max height of footer ad */
     bottom: 166px;
+    /* 166 without search button */
+    /* 205 with search button */
+}
+body.search .has-tabs {
+    bottom: 205px;
 }
 
 /* Desktops and laptops ----------- */
