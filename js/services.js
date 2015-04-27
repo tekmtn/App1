@@ -135,6 +135,7 @@ angular.module('homeviewapp.services', [])
 })
 .factory('Ads', function($http, ErrorLog) {
   var jsonpurl = "http://www.re605.com/homeviewapp/re605appads/?callback=JSON_CALLBACK";
+  
   var Ads = {
     gethome: function() {
       var promise = $http.jsonp(jsonpurl, {params: {adtype:"home", type:"json"}}).then(function (response) {

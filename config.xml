@@ -2,8 +2,8 @@
 <widget xmlns   = "http://www.w3.org/ns/widgets"
     xmlns:gap   = "http://phonegap.com/ns/1.0"
     id          = "com.tekmtn.homeviewapp"
-    versionCode = "10204" 
-    version     = "1.2.4">
+    versionCode = "10207" 
+    version     = "1.2.7">
 
     <name>HomeVIEW Real Estate Listings</name>
     <description>
@@ -36,7 +36,7 @@
     <!--<gap:plugin name="uk.co.whiteoctober.cordova.appversion" version="0.1.4" />-->
 
     <feature name="InAppBrowser">
-        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+        <param name="android-package" value="org.apache.cordova.InAppBrowser" />
         <param name="ios-package" value="CDVInAppBrowser" />
     </feature>
 

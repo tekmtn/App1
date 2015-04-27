@@ -1,14 +1,16 @@
 
 angular.module('homeviewapp.controllers', [])
 
-.controller('AdCtrl', function($scope,$http,$state,$location, Ads/*, AppVersion*/) {
+.controller('AdCtrl', function($scope,$http,$state,$location, Ads, $rootScope/*, AppVersion*/) {
     //console.log("AdCtrl");
 
     $scope.adurl = "http://www.re605.com/_client_media/ads/";
     $scope.showAd = true;
     $scope.hideTabs = true;
+    $scope.hideSearchButton = true;
     $scope.adLoaded = false; 
     $scope.loading = true;
+    $rootScope.bodyclass = 'ad';
     
     $scope.close_ad = function() {
         console.log("closing ad");
@@ -78,7 +80,9 @@ angular.module('homeviewapp.controllers', [])
                 if(homead != undefined) {
                     var homelink = "";
                     if(homead.link_url != "#") {
-                        homelink = "<a href='" + homead.link_url + "' target='_blank'><img src='" + $scope.adurl + homead.name + "' /></a>";
+                        //homelink = "<a href='" + homead.link_url + "' target='_blank'><img src='" + $scope.adurl + homead.name + "' /></a>";
+                        homelink = "<a style='cursor:pointer;' ng-click='view_ad_link(" + homead.link_url + ")' target='_blank'><img src='" + $scope.adurl + homead.name + "' /></a>";
+
                     } else {
                         homelink = "<img src='" + $scope.adurl + homead.name + "' />";
                     }
@@ -97,21 +101,32 @@ angular.module('homeviewapp.controllers', [])
         }
     }
 
+    $scope.view_ad_link = function(url) {
+        window.open(url, '_system', 'location=yes');
+    }
+
     //console.log("Calling init");
     $scope.init();
 })
-.controller('FooterCtrl', function($scope, Ads, ErrorLog) {
+.controller('FooterCtrl', function($scope, Ads, ErrorLog, $location) {
     $scope.adurl = "http://www.re605.com/_client_media/ads/";
     $scope.footer_ad;
     $scope.footer_link;
+    $scope.location = $location;
 
     Ads.getfooter().then(function(ads) {
         $scope.footer_ad = $scope.adurl + ads[0].name;
         $scope.footer_has_link = ads[0].link_url != '#' ? true : false;
         $scope.footer_link = ads[0].link_url;
     });
+
+    $scope.view_ad_link = function(url) {
+        window.open(url, '_system', 'location=yes');
+    }
+
+    console.log("location", $location);
 })
-.controller('HomeCtrl', function($scope, $window, $http, Ads, Favorites, ErrorLog) {
+.controller('HomeCtrl', function($scope, $window, $http, Ads, Favorites, ErrorLog, $rootScope) {
 
     $scope.lat = "43.541033";
     $scope.lng = "-96.7457591";
@@ -122,6 +137,8 @@ angular.module('homeviewapp.controllers', [])
     $scope.listings = [];
     $scope.markers = [];
     $scope.adurl = "http://www.re605.com/_client_media/ads/";
+    $scope.hideSearchButton = true;
+    $rootScope.bodyclass = 'home';
 
     $scope.loading = false;
 
@@ -531,18 +548,27 @@ angular.module('homeviewapp.controllers', [])
     }
 })
 
-.controller('OpenHousesCtrl', function($scope, $http, currency, Ads, ErrorLog) {
+.controller('OpenHousesCtrl', function($scope, $http, currency, Ads, ErrorLog, $location, $rootScope) {
     $scope.jsonpurl = "http://www.re605.com/homeviewapp/re605appgetopenhouses/?callback=JSON_CALLBACK";
     $scope.adurl = "http://www.re605.com/_client_media/ads/";
+    $scope.hideSearchButton = true;
+    $rootScope.bodyclass = 'openhouse';
 
     $scope.getCurrency = function(amt) {
         return '$' + currency.get(amt);
+    }
+
+    $scope.view_ad_link = function(url) {
+        window.open(url, '_system', 'location=yes');
     }
 
     $scope.getOpenHouses = function() {
         $http.jsonp($scope.jsonpurl, {params: {
             type: "json"
         }}).success(function(data){
+
+            console.log("open houses: ", data);
+
             if(data.result == "success") {
                 if(data.listings !== false) {
                     $scope.listings = data.listings;
@@ -560,11 +586,12 @@ angular.module('homeviewapp.controllers', [])
     $scope.getOpenHouses();
 })
 
-.controller('FavoritesCtrl', function($scope, $http, Favorites, Ads, currency, ErrorLog) {
+.controller('FavoritesCtrl', function($scope, $http, Favorites, Ads, currency, ErrorLog, $rootScope) {
 
     $scope.jsonpurl = "http://www.re605.com/homeviewapp/re605appgetfavorites/?callback=JSON_CALLBACK";
     $scope.favoritesCount = 0;
     $scope.adurl = "http://www.re605.com/_client_media/ads/";
+    $rootScope.bodyclass = 'favorites';
 
 
     $scope.getCurrency = function(amt) {
@@ -617,16 +644,17 @@ angular.module('homeviewapp.controllers', [])
     $scope.getFavorites();
 })
 
-.controller('FavoriteDetailCtrl', function($scope, $stateParams, Ads, Favorites) {
+.controller('FavoriteDetailCtrl', function($scope, $stateParams, Ads, Favorites, $rootScope) {
     $scope.favorite = Favorites.get($stateParams.favoriteId);
     $scope.adurl = "http://www.re605.com/_client_media/ads/";
+    $rootScope.bodyclass = 'favoritesDetail';
 
     if(gaPlugin) {
         gaPlugin.trackEvent( gaSuccessHandler, gaErrorHandler, "Favorites", "Click", "View Favorite", $scope.favorite.mls_number);
     }
 })
 
-.controller('ListingDetailCtrl', function($scope, $stateParams, $http, currency, $window, Ads, Favorites, ErrorLog) {
+.controller('ListingDetailCtrl', function($scope, $stateParams, $http, currency, $window, Ads, Favorites, ErrorLog, $rootScope) {
     //console.log("Getting listing details...");
     //console.log($stateParams);
     $scope.adurl = "http://www.re605.com/_client_media/ads/";
@@ -657,6 +685,7 @@ angular.module('homeviewapp.controllers', [])
     $scope.contact.email = "";
     $scope.contact.phone = "";
     $scope.contact.message = "";*/
+    $rootScope.bodyclass = 'listingDetail';
 
 
     $scope.goBack = function() {
@@ -724,6 +753,8 @@ angular.module('homeviewapp.controllers', [])
         Favorites.remove(mls);
         $scope.isFavorited = false;
     }
+
+
 
     //$scope.listing = Listings.get($stateParams.mls);
     $scope.getListing = function() {
@@ -796,12 +827,13 @@ angular.module('homeviewapp.controllers', [])
 
     $scope.getListing();
 })
-.controller('SearchCtrl', function($scope, $http, $state, Ads, searchcriteria, currency) {
+.controller('SearchCtrl', function($scope, $http, $state, Ads, searchcriteria, currency, $rootScope) {
     $scope.foundLocation = false;
     $scope.adurl = "http://www.re605.com/_client_media/ads/";
     $scope.showResults = false;
     $scope.lat = null;
     $scope.lng = null;
+    $rootScope.bodyclass = 'search';
 
     if(gaPlugin) {
         gaPlugin.trackEvent( gaSuccessHandler, gaErrorHandler, "Search", "Load", "Load Search", 1);    
@@ -841,7 +873,7 @@ angular.module('homeviewapp.controllers', [])
     //console.log(window.localStorage["lastSearchedZipCode"].length);
     //alert(window.localStorage["lastSearchedZipCode"]);
     //$scope.useMyLocation = window.localStorage["lastSearchedUseMyLocation"] != undefined ? window.localStorage["lastSearchedUseMyLocation"] : false;
-    $scope.location = window.localStorage["lastSearchedLocation"] != undefined ? window.localStorage["lastSearchedLocation"] : "";
+    $scope.location = window.localStorage["lastSearchedLocation"] != undefined ? window.localStorage["lastSearchedLocation"] : "57106";
     $scope.radius = window.localStorage["lastSearchedRadius"] != undefined ? window.localStorage["lastSearchedRadius"] : 1;
     $scope.minbeds = window.localStorage["lastSearchedMinBeds"] != undefined ? window.localStorage["lastSearchedMinBeds"] : "1";
     $scope.maxbeds = window.localStorage["lastSearchedMaxBeds"] != undefined ? window.localStorage["lastSearchedMaxBeds"] : "3";
@@ -862,7 +894,7 @@ angular.module('homeviewapp.controllers', [])
 
         //console.log("use my location: ", useMyLocation);
 
-        var location = document.getElementById("location").value;
+        var location = 57106; //document.getElementById("location").value;
         var radius = document.getElementById("radius").value;
         var minbeds = document.getElementById("minbeds").value;
         var maxbeds = document.getElementById("maxbeds").value;
@@ -899,7 +931,6 @@ angular.module('homeviewapp.controllers', [])
             window.localStorage["lastSearchedMaxPrice"] = maxprice;
             window.localStorage["lastSearchedPropertyType"] = propertytype;
             window.localStorage["lastSearchedSortBy"] = sortby;
-
 
             var c = [];
 
@@ -961,12 +992,12 @@ angular.module('homeviewapp.controllers', [])
         //console.log("location unable to be found");
         //ErrorLog.store({description: "error with geolocation", error:error});
     }
-}).controller('SearchResultsCtrl', function($scope, $http, $window, searchcriteria, Ads, currency, $state, ErrorLog) {
+}).controller('SearchResultsCtrl', function($scope, $http, $window, searchcriteria, Ads, currency, $state, ErrorLog, $rootScope) {
     $scope.showResults = true;
     $scope.jsonpurl = "http://www.re605.com/homeviewapp/re605appsearch";
     $scope.adurl = "http://www.re605.com/_client_media/ads/";
     $scope.loaded = false;
-
+    $rootScope.bodyclass = 'searchResults';
     $scope.sortby = "";
 
     $scope.goBack = function() {
@@ -990,6 +1021,9 @@ angular.module('homeviewapp.controllers', [])
 
         $scope.getResults();
         //console.log(criteria);
+    }
+    $scope.view_ad_link = function(url) {
+        window.open(url, '_system', 'location=yes');
     }
     $scope.getResults = function() {
         criteria = searchcriteria.get();

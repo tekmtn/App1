@@ -24,9 +24,8 @@
               <p>Open House: {{listing.open_house_date | date:'mediumDate' }} {{listing.open_house_start}} - {{listing.open_house_end}}</p>
 
             </a>
-            
             <span class="item item-search-results-ad" ng-if="!listing.isListing && listings[listings.length-1] != listing && listing.ad.link_url != '#'">
-                <a ng-href="{{listing.ad.link_url}}">
+                <a style='cursor:pointer;' ng-click="view_ad_link(listing.ad.link_url)" target="_blank">
                     <img src="{{adurl}}/{{listing.ad.name}}" />
                 </a>
             </span>
@@ -34,6 +33,9 @@
                 <img src="{{adurl}}/{{listing.ad.name}}" />
             </span>
         </span>
+
+
+          
       </div>
 
     </div>

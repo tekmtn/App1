@@ -1,9 +1,9 @@
 <ion-view title="Search Results">
-	<ion-header-bar align-title="left" class="bar-positive">
-	  <div class="buttons">
-	    <button class="button" ng-click="goBack()">Back</button>
-	  </div>
-	  <h1 class="title">Search Results</h1>
+    <ion-header-bar align-title="left" class="bar-positive">
+      <div class="buttons">
+        <button class="button" ng-click="goBack()">Back</button>
+      </div>
+      <h1 class="title">Search Results</h1>
       <div class="buttons">
         <label class='header-label'>Sort:</label>
         <select id="sortby" ng-model="sortby" ng-change="change_sortby()">
@@ -13,22 +13,22 @@
         </select>
         
       </div>
-	</ion-header-bar>
+    </ion-header-bar>
   <ion-content has-header="true" padding="true">
-  	<div class='searchResults' ng-hide="!showResults">
+    <div class='searchResults' ng-hide="!showResults">
         <div ng-hide="!loaded">
             <div ng-if="listingCount >= 50"><strong>More than 50 results were found.<Br />Please refine your search to view more.</strong></div>
             <div ng-if="listingCount > 0 && listingCount < 50"><strong>{{listingCount}} listing<span ng-hide"listingCount == 1">s</span> found</strong></div>
             <div ng-hide="listingCount > 0">
-    			<p>No results were found, please adjust your search criteria.</p>
-    		</div>
+                <p>No results were found, please adjust your search criteria.</p>
+            </div>
         </div>
         <div ng-hide="loaded">
             loading...
         </div>
 
         <div class="list search-results-container" ng-hide="listings.length == 0">
-        	<span ng-repeat="listing in listings">
+            <span ng-repeat="listing in listings">
                 <a ng-if="listing.isListing"
                    ng-class="{'item item-thumbnail-left': listing.isListing}" 
                    
@@ -42,7 +42,7 @@
                    </span>
                 </a>
                 <span class="item item-search-results-ad" ng-if="!listing.isListing && listings[listings.length-1] != listing && listing.ad.link_url != '#'">
-                    <a ng-href="{{listing.ad.link_url}}">
+                    <a style='cursor:pointer;' ng-click="view_ad_link(listing.ad.link_url)" target="_blank">
                         <img src="{{adurl}}/{{listing.ad.name}}" />
                     </a>
                 </span>
@@ -50,10 +50,10 @@
                     <img src="{{adurl}}/{{listing.ad.name}}" />
                 </span>
             </span>
-        	
-		</div>
+            
+        </div>
 
-		
+        
 
         <!--<div class="mylist">
           <div ng-repeat="item in listings">
@@ -63,12 +63,12 @@
                         <img ng-src="http://dev-listings.re605.com/images/property/{{item.mls_number}}/1.jpg" class="search-img-responsive" />
                     </div>
                     <div class='search-item-details'>
-                    	<strong ng-hide="!item.price">{{getCurrency(item.price)}}<br /></strong>
-                    	<span ng-hide="!item.address">{{item.address}}<br /></span>
-                    	<span ng-hide="!item.beds">{{item.beds}} Beds<br /></span>
-                    	<span ng-hide="!item.baths">{{item.baths}} Baths<br /></span>
-                    	<span ng-hide="!item.square_feet">{{item.square_feet}} Sq Ft<br /></span>
-                    	<span ng-hide="!item.home_style">{{item.home_style}}<br /></span>
+                        <strong ng-hide="!item.price">{{getCurrency(item.price)}}<br /></strong>
+                        <span ng-hide="!item.address">{{item.address}}<br /></span>
+                        <span ng-hide="!item.beds">{{item.beds}} Beds<br /></span>
+                        <span ng-hide="!item.baths">{{item.baths}} Baths<br /></span>
+                        <span ng-hide="!item.square_feet">{{item.square_feet}} Sq Ft<br /></span>
+                        <span ng-hide="!item.home_style">{{item.home_style}}<br /></span>
                         
                     </div>
                 </a>

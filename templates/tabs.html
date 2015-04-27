@@ -4,16 +4,24 @@
   navigation history that also transitions its views in and out.
 -->
 
+
 <div ng-controller="FooterCtrl" class='footer-ad' id='footer_ad_container'>
+  <div id='search-button-container' ng-if="location.$$url == '/tab/search'">
+    <button ng-controller="SearchCtrl" ng-click='search();' class='button button-block button-positive icon-right ion-search'>
+      Search
+    </button>
+  </div>
   <div ng-if="footer_has_link">
-    <a href="{{footer_link}}" target="_blank"><img src="{{footer_ad}}" /></a>
+    <a style='cursor:pointer;' ng-click="view_ad_link(footer_link)" target="_blank">
+        <img src="{{footer_ad}}" />
+    </a>
   </div>
   <div ng-if="!footer_has_link">
     <img src="{{footer_ad}}" />
   </div>
 </div>
 
-<ion-tabs class="tabs-icon-top">
+<ion-tabs class="tabs-icon-bottom">
 
 
   <!-- Pets Tab -->
